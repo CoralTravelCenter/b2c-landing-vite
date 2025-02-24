@@ -1,0 +1,10 @@
+{
+	"env": {
+		"brand": "coral-next",
+		"cmsWidgetContainer": "<div>{{ widget_markup }}</div>",
+		"cdnAssetsURL": ""
+	},
+	"sections": [
+		"./site/coral.ru/markup/hero.html"
+	]
+}
