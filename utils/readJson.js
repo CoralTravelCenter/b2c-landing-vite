@@ -1,11 +1,6 @@
 import fs from "fs-extra";
-import { resolve } from "path";
+import {resolve} from "path";
 
-/**
- * Читает и парсит JSON-файл
- * @param {string} filePath - Относительный или абсолютный путь к JSON-файлу
- * @returns {Object|null} - Объект JSON или null в случае ошибки
- */
 export function readJson(filePath) {
   if (!filePath) {
     console.error("❌ Ошибка: Путь к JSON-файлу не указан!");
