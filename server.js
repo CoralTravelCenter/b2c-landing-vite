@@ -1,104 +1,74 @@
-// import express from 'express';
-// import fs from 'fs';
-// import path from 'path';
-// import chokidar from 'chokidar';
-// import browserSync from 'browser-sync';
-// import {readJson} from './utils/readJson.js';
-// import {rebuildHtml} from './utils/rebuildHtml.js';
-//
-// const app = express();
-// const PORT = 3000;
-// const JSON_PATH = process.argv[2];
-//
-// if (!JSON_PATH) {
-//   console.error('❌ Укажи путь к config.json');
-//   process.exit(1);
-// }
-//
-// let config = readJson(JSON_PATH);
-// const brandDir = path.resolve(`web-root/${config.env.brand}`);
-// const baseHtmlPath = path.join(brandDir, 'content.desktop.html');
-// const staticDir = path.join(brandDir, '_next/static');
-//
-// if (!fs.existsSync(baseHtmlPath)) {
-//   console.error(`❌ Не найден файл: ${baseHtmlPath}`);
-//   process.exit(1);
-// }
-//
-// // Первый расчёт путей секций
-// let sectionPaths = (config.sections || []).map(p => path.resolve(p));
-// let finalHtml = rebuildHtml(baseHtmlPath, sectionPaths);
-//
-// // 📦 Раздача статики
-// app.use('/_next/static', express.static(staticDir));
-//
-// // 📡 Главная страница
-// app.get('/', (req, res) => {
-//   res.setHeader('Content-Type', 'text/html');
-//   res.send(finalHtml);
-// });
-//
-// // 👀 Вотчер на шаблон, конфиг и секции
-// const watcher = chokidar.watch([baseHtmlPath, JSON_PATH, ...sectionPaths]);
-//
-// watcher.on('change', () => {
-//   console.log('🔁 Обнаружены изменения, пересборка...');
-//   config = readJson(JSON_PATH);
-//   sectionPaths = (config.sections || []).map(p => path.resolve(p));
-//   finalHtml = rebuildHtml(baseHtmlPath, sectionPaths);
-// });
-//
-// // 🚀 Express старт
-// app.listen(PORT, () => {
-//   console.log(`🚀 Dev-сервер (Express) запущен: http://localhost:${PORT}`);
-// });
-//
-// // 🔥 BrowserSync (live reload)
-// const bs = browserSync.create();
-// bs.init({
-//   proxy: `http://localhost:${PORT}`,
-//   port: 3001,
-//   open: true,
-//   notify: false,
-//   ui: false,
-//   files: [baseHtmlPath, JSON_PATH]
-// });
-
 import express from 'express';
-import path from 'path';
 import fs from 'fs';
+import {resolve} from 'path';
+import {createServer as createViteServer} from 'vite';
 import ViteExpress from 'vite-express';
 import {readJson} from './utils/readJson.js';
-import {rebuildHtml} from './utils/rebuildHtml.js';
+import browserSync from 'browser-sync';
+import {rebuildHtmlWithSections} from "./utils/rebuildHtmlWithSections.js";
+import {getIndexHtml} from "./utils/getIndexHtml.js";
 
 const app = express();
 const PORT = 3000;
+
+// Получаем путь к JSON-файлу из аргумента командной строки
 const JSON_PATH = process.argv[2];
 
-if (!JSON_PATH) {
-  console.error('❌ Укажи путь к config.json');
+if (!JSON_PATH || !fs.existsSync(JSON_PATH)) {
+  console.error(`❌ Указанный JSON-файл не найден или путь не указан: ${JSON_PATH}`);
   process.exit(1);
 }
 
-let config = readJson(JSON_PATH);
-const brandDir = path.resolve(`web-root/${config.env.brand}`);
-const baseHtmlPath = path.join(brandDir, 'content.desktop.html');
+let indexHtmlPath;
+let sectionPaths;
 
-if (!fs.existsSync(baseHtmlPath)) {
-  console.error(`❌ Не найден файл: ${baseHtmlPath}`);
-  process.exit(1);
-}
+// Настроим Vite сервер
+const vite = await createViteServer({
+  root: process.cwd(),
+  server: {middlewareMode: 'ssr'}
+});
+app.use(vite.middlewares);
 
-let sectionPaths = (config.sections || []).map(p => path.resolve(p));
-let finalHtml = rebuildHtml(baseHtmlPath, sectionPaths);
+// Читаем JSON, обрабатываем и получаем путь к основному HTML
+const BRAND = readJson(JSON_PATH);
+globalThis.BRAND = BRAND;
 
-// Главная страница
-app.get('/', (req, res) => {
-  res.setHeader('Content-Type', 'text/html');
-  res.send(finalHtml);
+const staticDir = resolve(process.cwd(), `web-root/${BRAND.env.brand}/static`);
+app.use(express.static(staticDir));
+
+indexHtmlPath = resolve(staticDir, 'content.desktop.html');
+sectionPaths = (BRAND.sections || []).map(p => resolve(p));
+
+// Рендерим HTML при запросе на '/'
+app.get('/', async (req, res) => {
+  const indexHtmlPath = getIndexHtml(JSON_PATH, app);
+
+  // Получаем путь к секциям из JSON
+  const sectionPaths = (readJson(JSON_PATH).sections || []).map(p => resolve(p));
+
+  await vite.transformIndexHtml(req.url, fs.readFileSync(indexHtmlPath, 'utf-8'));
+
+  // Инжектируем секции в HTML
+  const htmlWithSections = await rebuildHtmlWithSections(indexHtmlPath, sectionPaths, vite);
+
+  // Отправляем итоговый HTML
+  res.status(200).set({'Content-Type': 'text/html'}).end(htmlWithSections);
 });
 
-// 💥 Подключаем Vite как middleware
+// Запускаем сервер с Vite
 ViteExpress.listen(app, PORT, () => {
-  console.log(`🚀 Dev-сервер с Vite доступен на http://localhost:${PORT}`);
+  console.log(`🚀 Сервер запущен на http://localhost:${PORT}`);
+  const bs = browserSync.create();
+  bs.init({
+    proxy: `http://localhost:${PORT}`,
+    port: PORT + 1,
+    open: true,
+    notify: false,
+    ui: false,
+    files: [
+      indexHtmlPath,
+      JSON_PATH,
+      ...sectionPaths || []
+    ]
+  });
 });
