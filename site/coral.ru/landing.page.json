@@ -1,6 +1,6 @@
 {
   "env": {
-    "brand": "coral",
+    "brand": "coral-next",
     "cmsWidgetContainer": "<div>{{ widget_markup }}</div>",
     "cdnAssetsURL": ""
   },

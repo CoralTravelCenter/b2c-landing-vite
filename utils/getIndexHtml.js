@@ -3,7 +3,7 @@ import {resolve} from 'path';
 import {readJson} from './readJson.js';
 import express from "express";
 
-export function getIndexHtml(JSON_PATH, app) {
+export function getIndexHtml(app, JSON_PATH) {
   if (!JSON_PATH || !fs.existsSync(JSON_PATH)) {
     console.error(`❌ Указанный JSON-файл не найден или путь не указан: ${JSON_PATH}`);
     process.exit(1);
@@ -20,7 +20,7 @@ export function getIndexHtml(JSON_PATH, app) {
 
     console.log(`✅ Загрузка конфигурации бренда: ${BRAND.env.brand}`);
 
-    const staticDir = resolve(process.cwd(), `web-root/${BRAND.env.brand}-next`);
+    const staticDir = resolve(process.cwd(), `web-root/${BRAND.env.brand}`);
     app.use(express.static(staticDir));
 
     console.log(`📂 Статические файлы раздаются из: ${staticDir}`);
