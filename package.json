@@ -5,12 +5,12 @@
 	"type": "module",
 	"scripts": {
 		"dev": "node server.js",
-		"start": "NODE_ENV=production node src/server/main.js",
 		"build": "vite build"
 	},
 	"devDependencies": {
 		"nodemon": "^3.0.1",
 		"sass-embedded": "^1.86.3",
+		"ts-node": "^10.9.2",
 		"vite": "^5.0.2"
 	},
 	"dependencies": {
