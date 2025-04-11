@@ -1,24 +1,22 @@
-async function rebuildHtmlWithSections(baseHtmlPath, sectionPaths, vite) {
+import fs from "fs";
+import jsesc from "jsesc";
+
+/**
+ * Вставляет HTML-секции в шаблон страницы, заменяя плейсхолдеры на сгенерированный и экранированный HTML.
+ * @param {string} baseHtmlPath - Путь к исходному HTML-файлу, содержащему плейсхолдеры для вставки.
+ * @param htmlToInject
+ * @returns {Promise<string>} Обновлённый HTML-файл с внедрёнными секциями.
+ */
+
+export async function injectSections(baseHtmlPath, htmlToInject) {
   const html = fs.readFileSync(baseHtmlPath, 'utf-8')
-  const injectedSections = []
 
-  for (const sectionPath of sectionPaths) {
-    if (fs.existsSync(sectionPath)) {
-      const sectionHtml = await processSectionFiles(sectionPath, vite)
-      injectedSections.push(sectionHtml)
-    } else {
-      console.warn(`⚠️ Секция не найдена: ${sectionPath}`)
-      injectedSections.push('')
-    }
-  }
-
-  const injected = injectedSections.join('\n')
-  const escaped = jsesc(injected, {
+  const escaped = jsesc(htmlToInject, {
     quotes: 'double',
     isScriptContext: true,
   })
 
   return html
-    .replace('<!-- PAYLOAD PLACEHOLDER -->', injected)
+    .replace('<!-- PAYLOAD PLACEHOLDER -->', htmlToInject)
     .replace('<!-- ESCAPED PAYLOAD PLACEHOLDER -->', escaped)
 }
