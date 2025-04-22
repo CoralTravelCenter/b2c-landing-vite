@@ -9,6 +9,7 @@ lerna-debug.log*
 
 node_modules
 dist
+@CMS
 dev
 dist-ssr
 *.local

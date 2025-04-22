@@ -1,3 +1,7 @@
-const a = document.querySelector('.hero-sp')
-a.classList.add('hero-speed')
-console.log(a)
+import {hostReactAppReady} from "../../common/js/usefuls.js";
+
+hostReactAppReady().then(() => {
+  const a = document.querySelector('h1')
+  a.textContent = 'Hello World';
+  console.log(a)
+})
