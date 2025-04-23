@@ -10,6 +10,8 @@ import {loadConfig} from "./utils/loadConfig.js";
 import {reloadSections} from "./utils/reloadSections.js";
 import {copyTemplateFiles} from "./utils/copyTemplateFiles.js";
 import {prepareDevDirectory} from "./utils/prepareDevDirectory.js";
+import vue from "@vitejs/plugin-vue";
+import react from '@vitejs/plugin-react'
 
 // Получаем текущую директорию
 const __filename = fileURLToPath(import.meta.url)
@@ -48,6 +50,7 @@ async function startServer() {
 
   // Создаем Vite сервер с включенным HMR
   const vite = await createViteServer({
+    plugins: [react(), vue()],
     server: {
       middlewareMode: true, // Оставляем middleware режим
       hmr: true, // Включаем HMR

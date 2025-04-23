@@ -1,6 +1,8 @@
 import fs from 'fs';
 import path from 'path';
 import {build} from 'vite';
+import vue from "@vitejs/plugin-vue";
+import react from '@vitejs/plugin-react';
 
 const JSON_PATH = process.argv[2];
 
@@ -58,6 +60,7 @@ async function processSection(sectionPath) {
   // ⚡ Сборка JS
   if (jsPath) {
     await build({
+      plugins: [react(), vue()],
       build: {
         rollupOptions: {
           input: jsPath,

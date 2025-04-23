@@ -8,12 +8,12 @@
     "build": "node builder.js"
   },
   "devDependencies": {
-    "nodemon": "^3.0.1",
     "sass-embedded": "^1.86.3",
-    "ts-node": "^10.9.2",
     "vite": "^5.4.18"
   },
   "dependencies": {
+    "@vitejs/plugin-react": "^4.4.1",
+    "@vitejs/plugin-vue": "^5.2.3",
     "browser-sync": "^3.0.3",
     "cheerio": "^1.0.0",
     "chokidar": "^4.0.3",
@@ -21,8 +21,8 @@
     "find-up": "^7.0.0",
     "fs-extra": "^11.3.0",
     "jsesc": "^3.1.0",
+    "less": "^4.3.0",
     "sass": "^1.87.0",
-    "terser": "^5.39.0",
     "vite-express": "*"
   }
 }
