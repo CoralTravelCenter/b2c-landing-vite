@@ -1,107 +1,80 @@
-import fs from 'fs';
+import {existsSync, mkdirSync, readFileSync, rmSync, writeFileSync} from 'fs';
 import path from 'path';
 import {build} from 'vite';
-import vue from "@vitejs/plugin-vue";
-import react from '@vitejs/plugin-react';
+import {DIRECTORIES, JSON_PATH, MESSAGES, PATH_TEMPLATES} from './constants.js';
+import {getCssBuildConfig, getJsBuildConfig} from './configs.js';
 
-const JSON_PATH = process.argv[2];
 
 if (!JSON_PATH) {
-  console.error('❌ Укажи путь к config.json');
+  console.error(MESSAGES.NO_JSON_PATH);
   process.exit(1);
 }
 
-const config = JSON.parse(fs.readFileSync(JSON_PATH, 'utf-8'));
-const cmsDir = path.resolve('@CMS');
+// Чтение и парсинг конфигурационного файла
+const config = JSON.parse(readFileSync(JSON_PATH, 'utf-8'));
+const cmsDir = path.resolve(DIRECTORIES.CMS);
 
-if (fs.existsSync(cmsDir)) fs.rmSync(cmsDir, {recursive: true});
-if (fs.existsSync('dist')) fs.rmSync('dist', {recursive: true});
-fs.mkdirSync(cmsDir);
+// Очистка рабочих директорий перед сборкой
+if (existsSync(cmsDir)) rmSync(cmsDir, {recursive: true});
+if (existsSync(DIRECTORIES.DIST)) rmSync(DIRECTORIES.DIST, {recursive: true});
+mkdirSync(cmsDir);
 
+// Функция для обработки одной секции
 async function processSection(sectionPath) {
-  const html = fs.readFileSync(sectionPath, 'utf-8');
+  // Чтение HTML секции
+  const html = readFileSync(sectionPath, 'utf-8');
 
+  // Поиск подключённых CSS и JS файлов в HTML
   const cssMatch = html.match(/<link[^>]*href="([^"]+)"[^>]*\/?>/i);
   const jsMatch = html.match(/<script[^>]*src="([^"]+)"[^>]*><\/script>/i);
 
   const cssRelPath = cssMatch ? cssMatch[1] : null;
   const jsRelPath = jsMatch ? jsMatch[1] : null;
 
+  // Получение абсолютных путей к CSS и JS файлам
   const cssPath = cssRelPath ? path.resolve(path.dirname(sectionPath), cssRelPath) : null;
   const jsPath = jsRelPath ? path.resolve(path.dirname(sectionPath), jsRelPath) : null;
 
   const sectionName = path.basename(sectionPath, '.html');
-  const outputDir = `dist/${sectionName}`;
+  const outputDir = `${DIRECTORIES.DIST}/${sectionName}`;
 
   let cssOutput = '';
   let jsOutput = '';
 
-  // 🎨 Сборка CSS
+  // Сборка CSS, если он присутствует
   if (cssPath) {
-    await build({
-      build: {
-        rollupOptions: {
-          input: cssPath,
-          output: {
-            dir: outputDir,
-            format: 'es',
-            assetFileNames: `assets/${sectionName}.css`
-          }
-        },
-        cssCodeSplit: false,
-        emptyOutDir: false,
-        logLevel: 'silent'
-      }
-    });
-
-    cssOutput = fs.readFileSync(`${outputDir}/assets/${sectionName}.css`, 'utf-8');
+    await build(getCssBuildConfig(cssPath, outputDir, sectionName));
+    cssOutput = readFileSync(`${outputDir}/${PATH_TEMPLATES.assetCss(sectionName)}`, 'utf-8');
   }
 
-  // ⚡ Сборка JS
+  // Сборка JS, если он присутствует
   if (jsPath) {
-    await build({
-      plugins: [react(), vue()],
-      build: {
-        rollupOptions: {
-          input: jsPath,
-          output: {
-            dir: outputDir,
-            format: 'es',
-            inlineDynamicImports: true,
-            entryFileNames: `assets/${sectionName}.js`
-          }
-        },
-        minify: 'terser',
-        emptyOutDir: false,
-        logLevel: 'silent'
-      }
-    });
-
-    jsOutput = fs.readFileSync(`${outputDir}/assets/${sectionName}.js`, 'utf-8');
+    await build(getJsBuildConfig(jsPath, outputDir, sectionName));
+    jsOutput = readFileSync(`${outputDir}/${PATH_TEMPLATES.assetJs(sectionName)}`, 'utf-8');
   }
 
-  // 🧼 Чистим HTML от link и script
+  // Очистка HTML от старых link и script тегов
   const cleanedHtml = html
     .replace(/<link[^>]*href="[^"]+"[^>]*\/?>/gi, '')
     .replace(/<script[^>]*src="[^"]+"[^>]*><\/script>/gi, '');
 
-  // 📝 Формируем финальный HTML
+  // Формирование финального HTML с инлайновыми стилями и скриптами
   const finalHtml = `
 ${cssOutput ? `<style>${cssOutput}</style>` : ''}
 ${cleanedHtml.trim()}
 ${jsOutput ? `<script type="module">${jsOutput}</script>` : ''}
   `;
 
-  // 📂 Сохраняем в @CMS
-  fs.writeFileSync(path.join(cmsDir, `coral-next-${sectionName}.html`), finalHtml.trim());
+  // Сохранение финального HTML в директорию CMS
+  writeFileSync(path.join(cmsDir, PATH_TEMPLATES.cmsFile(sectionName)), finalHtml.trim());
 
-  console.log(`✅ Секция [${sectionName}] успешно собрана!`);
+  console.log(MESSAGES.SECTION_BUILT(sectionName));
 }
 
-
+// Запуск процесса сборки всех секций
 (async () => {
   for (const section of config.sections) {
     await processSection(section);
   }
-  console.log('🚀 Все секции собраны в @CMS');
+  console.log(MESSAGES.ALL_SECTIONS_BUILT);
 })();

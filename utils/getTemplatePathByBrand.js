@@ -1,34 +1,31 @@
-import fs from "fs";
-import path from "path";
+import fs from 'fs';
+import path from 'path';
+import {PATH_TEMPLATES} from '../constants.js';
 
 /**
- * Получает путь к шаблону страницы
- * @param {string} jsonFilePath - Путь к JSON с конфигом бренда
- * @param __dirname
- * @return {string} - Путь к шаблону страницы
+ * Получает путь к HTML-шаблону на основе бренда из конфигурационного JSON-файла.
+ * Если шаблон не найден — завершает процесс с ошибкой.
+ *
+ * @param {string} jsonFilePath - Абсолютный путь к конфигурационному JSON-файлу.
+ * @param {string} rootDir - Корневая директория проекта.
+ * @returns {string} Полный путь к шаблону HTML для указанного бренда.
  */
-export async function getTemplatePathByBrand(jsonFilePath, __dirname) {
+export function getTemplatePathByBrand(jsonFilePath, rootDir) {
   try {
-    const jsonContent = fs.readFileSync(jsonFilePath, 'utf-8')
-    const config = JSON.parse(jsonContent)
+    const config = JSON.parse(fs.readFileSync(jsonFilePath, 'utf-8'));
+    const brand = config.env.brand
 
-    // Получаем бренд из конфигурации
-    const brand = config.brand
+    const templatePath = path.join(rootDir, PATH_TEMPLATES.brandTemplatePath(brand));
 
-    // Формируем путь к шаблону на основе бренда
-    const templatePath = path.join(__dirname, `web-root/${brand}-next/content.desktop.html`)
-
-    // Проверяем существование шаблона
     if (!fs.existsSync(templatePath)) {
-      console.warn(`Шаблон для бренда ${brand} не найден: ${templatePath}`)
-      console.warn('Используем шаблон по умолчанию')
-      return path.join(__dirname, 'web-root/coral-next/content.desktop.html')
+      throw new Error(`Шаблон для бренда "${brand}" не найден: ${templatePath}`);
     }
 
-    console.log(`Используется шаблон для бренда ${brand}: ${templatePath}`)
-    return templatePath
+    console.log(`Используется шаблон для бренда "${brand}": ${templatePath}`);
+    return templatePath;
+
   } catch (error) {
-    console.error(`Ошибка при получении шаблона: ${error.message}`)
-    return path.join(__dirname, 'web-root/coral-next/content.desktop.html')
+    console.error(`Ошибка при получении шаблона: ${error.message}`);
+    process.exit(1);
   }
 }

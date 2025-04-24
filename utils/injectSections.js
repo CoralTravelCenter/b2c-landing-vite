@@ -1,4 +1,4 @@
-import fs from "fs";
+import {readFileSync} from "fs";
 import jsesc from "jsesc";
 
 /**
@@ -9,7 +9,7 @@ import jsesc from "jsesc";
  */
 
 export async function injectSections(baseHtmlPath, htmlToInject) {
-  const html = fs.readFileSync(baseHtmlPath, 'utf-8')
+  const html = readFileSync(baseHtmlPath, 'utf-8')
 
   const escaped = jsesc(htmlToInject, {
     quotes: 'double',

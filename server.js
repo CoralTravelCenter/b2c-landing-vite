@@ -1,134 +1,90 @@
-import chokidar from 'chokidar'
-import express from 'express'
-import fs from 'fs'
-import path from 'path'
-import {fileURLToPath} from 'url'
-import {createServer as createViteServer} from 'vite'
+import chokidar from 'chokidar';
+import express from 'express';
+import open from 'open';
+import {existsSync} from 'fs'; // Импорт только нужного метода
+import {createServer as createViteServer} from 'vite';
 import {getTemplatePathByBrand} from "./utils/getTemplatePathByBrand.js";
 import {generateLanding} from "./utils/generateLanding.js";
 import {loadConfig} from "./utils/loadConfig.js";
 import {reloadSections} from "./utils/reloadSections.js";
 import {copyTemplateFiles} from "./utils/copyTemplateFiles.js";
 import {prepareDevDirectory} from "./utils/prepareDevDirectory.js";
-import vue from "@vitejs/plugin-vue";
-import react from '@vitejs/plugin-react'
 
-// Получаем текущую директорию
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
-const devDir = path.join(__dirname, 'dev')
-const jsonFilePath = process.argv[2]
-const app = express()
+import {DEFAULT_PORT, JSON_PATH, MESSAGES, PATHS} from './constants.js';
+import {VITE_SERVER_CONFIG, WATCHER_SETTINGS} from './configs.js';
+import {getLocalIp} from "./utils/getLocalIp.js";
 
+// Определяем рабочие переменные
+const app = express();
 
-// Функция для запуска сервера
 async function startServer() {
-  if (!jsonFilePath) {
-    console.error('Ошибка: Не указан путь к JSON файлу')
-    console.error('Использование: node server.js путь/к/файлу.json')
-    process.exit(1)
-  }
-
-  // Проверяем существование JSON файла
-  if (!fs.existsSync(jsonFilePath)) {
-    console.error(`Ошибка: Файл ${jsonFilePath} не найден`)
-    process.exit(1)
-  }
-
-  // Читаем и парсим JSON файл
-  let configData
-  try {
-    configData = loadConfig(jsonFilePath, __dirname);
-    console.log('Секции для обработки:', configData.sections);
-  } catch (error) {
-    console.error(`Ошибка при чтении JSON файла: ${error.message}`);
+  // Проверка на наличие пути к JSON-файлу
+  if (!JSON_PATH) {
+    console.error(MESSAGES.NO_JSON_PATH);
+    console.error(MESSAGES.USAGE);
     process.exit(1);
   }
 
-  // Очищаем директорию dev перед запуском
-  prepareDevDirectory(devDir)
+  // Проверка существования JSON-файла
+  if (!existsSync(JSON_PATH)) {
+    console.error(MESSAGES.FILE_NOT_FOUND(JSON_PATH));
+    process.exit(1);
+  }
 
-  // Создаем Vite сервер с включенным HMR
-  const vite = await createViteServer({
-    plugins: [react(), vue()],
-    server: {
-      middlewareMode: true, // Оставляем middleware режим
-      hmr: true, // Включаем HMR
-      watch: {
-        usePolling: true,
-        interval: 100,
-      },
-    },
-    appType: 'spa',
-    root: devDir, // Изменяем root на dev
-    publicDir: false,
-    css: {
-      preprocessorOptions: {
-        scss: {
-          api: 'modern-compiler',
-        },
-      },
-    },
-  })
+  // Загрузка конфигурации проекта
+  let configData;
+  try {
+    configData = loadConfig(JSON_PATH, PATHS.__dirname);
+    console.log(MESSAGES.SECTIONS_LOG, configData.sections);
+  } catch (error) {
+    console.error(MESSAGES.CONFIG_READ_ERROR(error.message));
+    process.exit(1);
+  }
 
-  // Используем Vite middleware
-  app.use(vite.middlewares)
+  // Подготовка директории для разработки
+  prepareDevDirectory(PATHS.DEV_DIR);
 
-  // Получаем путь к шаблону HTML на основе бренда
-  const templatePath = await getTemplatePathByBrand(jsonFilePath, __dirname)
+  // Создание Vite сервера с HMR
+  const vite = await createViteServer(VITE_SERVER_CONFIG(PATHS.DEV_DIR));
+  app.use(vite.middlewares);
 
-  // Копируем шаблон и статические файлы
-  copyTemplateFiles(templatePath, devDir)
+  // Получение пути к шаблону и копирование файлов
+  const templatePath = getTemplatePathByBrand(JSON_PATH, PATHS.__dirname);
+  copyTemplateFiles(templatePath, PATHS.DEV_DIR);
 
-  // Генерируем лэндинг при запуске
-  await generateLanding(templatePath, configData, devDir)
+  // Генерация лэндинга при запуске
+  await generateLanding(templatePath, configData, PATHS.DEV_DIR);
 
-  // Настраиваем отслеживание изменений в файлах секций
-  const watcher = chokidar.watch(configData.sections, {
-    persistent: true,
-    ignoreInitial: true,
-    awaitWriteFinish: {
-      stabilityThreshold: 300,
-      pollInterval: 100,
-    },
-  })
-
-  // При изменении любой секции перегенерируем лэндинг
+  // Отслеживание изменений в секциях
+  const watcher = chokidar.watch(configData.sections, WATCHER_SETTINGS);
   watcher.on('change', async changedPath => {
-    console.log(`Секция изменена: ${changedPath}`);
-    await generateLanding(templatePath, configData, devDir);
-  })
+    console.log(MESSAGES.SECTION_CHANGED(changedPath));
+    await generateLanding(templatePath, configData, PATHS.DEV_DIR);
+  });
 
-  // Также отслеживаем изменения в JSON-файле конфигурации
-  const configWatcher = chokidar.watch(jsonFilePath, {
-    persistent: true,
-    ignoreInitial: true,
-    awaitWriteFinish: {
-      stabilityThreshold: 300,
-      pollInterval: 100,
-    },
-  })
-
+  // Отслеживание изменений в конфигурационном файле
+  const configWatcher = chokidar.watch(JSON_PATH, WATCHER_SETTINGS);
   configWatcher.on('change', async () => {
-    console.log('Файл конфигурации изменен, обновляем список секций')
-
+    console.log(MESSAGES.CONFIG_CHANGED);
     try {
-      configData = await reloadSections(watcher, jsonFilePath, templatePath, devDir, __dirname);
+      configData = await reloadSections(watcher, JSON_PATH, templatePath, PATHS.DEV_DIR, PATHS.__dirname);
     } catch (error) {
-      console.error(`Ошибка при обновлении конфигурации: ${error.message}`);
+      console.error(MESSAGES.CONFIG_READ_ERROR(error.message));
     }
-  })
+  });
 
-  // Вместо вызова vite.listen(), запускаем Express сервер
-  const PORT = process.env.PORT || 3000
-  app.listen(PORT, () => {
-    console.log(`Сервер запущен на http://localhost:${PORT}`)
-    console.log(`Используется конфигурация из файла: ${jsonFilePath}`)
-  })
+  // Запуск сервера
+  const PORT = process.env.PORT || DEFAULT_PORT;
+  app.listen(PORT, '0.0.0.0', () => {
+    console.log(`🚀 Локально: http://localhost:${PORT}`);
+    console.log(`📱 В сети:   http://${getLocalIp()}:${PORT}`);
+    open(`http://localhost:${PORT}`);
+  });
+
 }
 
-// Запускаем сервер
+// Запуск с обработкой ошибок
 startServer().catch(error => {
-  console.error('Ошибка при запуске сервера:', error)
-  process.exit(1)
-})
+  console.error(MESSAGES.SERVER_ERROR, error);
+  process.exit(1);
+});

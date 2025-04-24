@@ -1,4 +1,4 @@
-import fs from "fs";
+import {readFileSync} from "fs";
 import path from "path";
 
 /**
@@ -12,7 +12,7 @@ import path from "path";
  */
 
 export function loadConfig(jsonFilePath, __dirname) {
-  const jsonContent = fs.readFileSync(jsonFilePath, 'utf-8');
+  const jsonContent = readFileSync(jsonFilePath, 'utf-8');
   const config = JSON.parse(jsonContent);
 
   if (!config.sections) {
