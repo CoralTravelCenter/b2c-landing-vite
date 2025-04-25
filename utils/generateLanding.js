@@ -33,7 +33,7 @@ export async function generateLanding(templatePath, configData, devDir) {
     const outputPath = path.join(devDir, 'index.html') // Изменяем путь на dev
     fs.writeFileSync(outputPath, injectedLandingHTML)
 
-    console.log(`Лэндинг сгенерирован: ${outputPath}`)
+    
   } catch (error) {
     console.error(`Ошибка при генерации лэндинга: ${error.message}`)
   }

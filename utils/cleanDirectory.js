@@ -7,6 +7,5 @@ import fs from "fs";
 export function cleanDirectory(directory) {
   if (fs.existsSync(directory)) {
     fs.rmSync(directory, {recursive: true, force: true});
-    console.log(`Директория удалена: ${directory}`);
   }
 }

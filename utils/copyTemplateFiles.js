@@ -17,20 +17,14 @@ export function copyTemplateFiles(templatePath, outputDir) {
     const nextDir = path.join(templateDir, '_next');
     if (fs.existsSync(nextDir)) {
       copyDir(nextDir, path.join(outputDir, '_next'));
-      console.log(`Папка _next скопирована из ${nextDir} в ${path.join(outputDir, '_next')}`);
     }
 
     // Копируем папку img, если она существует
     const imgDir = path.join(templateDir, 'img');
     if (fs.existsSync(imgDir)) {
       copyDir(imgDir, path.join(outputDir, 'img'));
-      console.log(`Папка img скопирована из ${imgDir} в ${path.join(outputDir, 'img')}`);
     }
 
-    // Не копируем сам HTML-файл шаблона, так как он будет использоваться напрямую
-    // при генерации index.html
-
-    console.log(`Статические файлы скопированы из ${templateDir} в ${outputDir}`);
   } catch (error) {
     console.error(`Ошибка при копировании шаблона: ${error.message}`);
   }

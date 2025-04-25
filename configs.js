@@ -1,5 +1,4 @@
 import vue from "@vitejs/plugin-vue";
-import react from "@vitejs/plugin-react";
 import {PATH_TEMPLATES} from './constants.js';
 
 // Общие настройки для Vite сборки
@@ -29,7 +28,7 @@ export function getCssBuildConfig(cssPath, outputDir, sectionName) {
 // Функция для генерации конфига сборки JS
 export function getJsBuildConfig(jsPath, outputDir, sectionName) {
   return {
-    plugins: [react(), vue()],   // Подключаем React и Vue плагины
+    plugins: [vue()],   // Подключаем React и Vue плагины
     build: {
       rollupOptions: {
         input: jsPath,
@@ -49,7 +48,7 @@ export function getJsBuildConfig(jsPath, outputDir, sectionName) {
 // Функция для генерации конфига dev режима
 export function VITE_SERVER_CONFIG(devDir) {
   return {
-    plugins: [react(), vue()],
+    plugins: [vue()],
     server: {
       middlewareMode: true,
       hmr: true,

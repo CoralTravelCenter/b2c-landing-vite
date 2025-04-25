@@ -21,7 +21,7 @@ export function getTemplatePathByBrand(jsonFilePath, rootDir) {
       throw new Error(`Шаблон для бренда "${brand}" не найден: ${templatePath}`);
     }
 
-    console.log(`Используется шаблон для бренда "${brand}": ${templatePath}`);
+   
     return templatePath;
 
   } catch (error) {

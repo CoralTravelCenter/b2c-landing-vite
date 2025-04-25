@@ -25,7 +25,7 @@ export async function processSection(sectionPath) {
         if (cssPath.endsWith('.scss') || cssPath.endsWith('.sass')) {
           $(elem).attr('href', cssPath)
           $(elem).attr('type', 'text/scss')
-          console.log(`Обновлена ссылка на SCSS: ${cssPath}`)
+
         }
       }
     })
@@ -37,7 +37,7 @@ export async function processSection(sectionPath) {
         if (fs.existsSync(jsPath)) {
           $(elem).attr('src', jsPath)
           $(elem).attr('type', 'module')
-          console.log(`Обновлена ссылка на скрипт: ${jsPath}`)
+
         } else {
           console.warn(`Файл скрипта не найден: ${jsPath}`)
         }

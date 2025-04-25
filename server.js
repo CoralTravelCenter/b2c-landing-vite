@@ -35,7 +35,6 @@ async function startServer() {
   let configData;
   try {
     configData = loadConfig(JSON_PATH, PATHS.__dirname);
-    console.log(MESSAGES.SECTIONS_LOG, configData.sections);
   } catch (error) {
     console.error(MESSAGES.CONFIG_READ_ERROR(error.message));
     process.exit(1);
@@ -76,6 +75,9 @@ async function startServer() {
   // Запуск сервера
   const PORT = process.env.PORT || DEFAULT_PORT;
   app.listen(PORT, '0.0.0.0', () => {
+    console.log('+++ Сервер запущен +++')
+    console.log(`CWD: ${PATHS.__dirname}`)
+    console.log(`SOURCE: ${JSON_PATH}`);
     console.log(`🚀 Локально: http://localhost:${PORT}`);
     console.log(`📱 В сети:   http://${getLocalIp()}:${PORT}`);
     open(`http://localhost:${PORT}`);

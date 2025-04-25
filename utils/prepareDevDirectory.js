@@ -10,6 +10,6 @@ export function prepareDevDirectory(devDir) {
   cleanDirectory(devDir);
   if (!fs.existsSync(devDir)) {
     fs.mkdirSync(devDir, {recursive: true});
-    console.log(`Создана директория для статических файлов: ${devDir}`);
+   
   }
 }
