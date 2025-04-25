@@ -49,3 +49,15 @@ export const PATH_TEMPLATES = {
   assetJs: (sectionName) => `${DIRECTORIES.ASSETS}/${sectionName}.js`,
   cmsFile: (sectionName) => `coral-next-${sectionName}.html`,
 };
+
+
+export const default_assets_dir = 'assets';
+export const default_assets_path = '/assets';
+export const default_cdn_assets_url_by_brand = {
+  coral: 'https://cdn.coral.ru/assets',
+  sunmar: 'https://cdn.sunmar.ru/assets'
+};
+export const cms_widget_container_template_by_brand = {
+  coral: '<div class="widgetcontainer coral">{{{ widget_markup }}}</div>',
+  sunmar: '<div class="widgetcontainer sunmar">{{{ widget_markup }}}</div>'
+};

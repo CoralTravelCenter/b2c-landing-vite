@@ -1,13 +1,17 @@
-import _ from "lodash";
+import {hostReactAppReady} from "../../common/js/usefuls.js";
+import {groupBy} from "lodash";
 
-const objArr = [
-  {type: 'fruit', name: 'apple'},
-  {type: 'fruit', name: 'banana'},
-  {type: 'vegetable', name: 'carrot'},
-  {type: 'fruit', name: 'orange'},
-  {type: 'vegetable', name: 'potato'}
-]
+(async () => {
+  await hostReactAppReady()
+  const objArr = [
+    {type: 'fruit', name: 'apple'},
+    {type: 'fruit', name: 'banana'},
+    {type: 'vegetable', name: 'carrot'},
+    {type: 'fruit', name: 'orange'},
+    {type: 'vegetable', name: 'potato'}
+  ]
 
-const grouped = _.groupBy(objArr, 'type');
+  const grouped = groupBy(objArr, 'type');
 
-console.log(grouped);
+  console.log(grouped);
+})()

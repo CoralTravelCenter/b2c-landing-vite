@@ -3,16 +3,17 @@ import express from 'express';
 import open from 'open';
 import {existsSync} from 'fs'; // Импорт только нужного метода
 import {createServer as createViteServer} from 'vite';
-import {getTemplatePathByBrand} from "./utils/getTemplatePathByBrand.js";
-import {generateLanding} from "./utils/generateLanding.js";
-import {loadConfig} from "./utils/loadConfig.js";
-import {reloadSections} from "./utils/reloadSections.js";
-import {copyTemplateFiles} from "./utils/copyTemplateFiles.js";
-import {prepareDevDirectory} from "./utils/prepareDevDirectory.js";
+import {getTemplatePathByBrand} from "./dev_utils/getTemplatePathByBrand.js";
+import {generateLanding} from "./dev_utils/generateLanding.js";
+import {loadConfig} from "./dev_utils/loadConfig.js";
+import {reloadSections} from "./dev_utils/reloadSections.js";
+import {copyTemplateFiles} from "./dev_utils/copyTemplateFiles.js";
+import {prepareDevDirectory} from "./dev_utils/prepareDevDirectory.js";
 
 import {DEFAULT_PORT, JSON_PATH, MESSAGES, PATHS} from './constants.js';
 import {VITE_SERVER_CONFIG, WATCHER_SETTINGS} from './configs.js';
-import {getLocalIp} from "./utils/getLocalIp.js";
+import {getLocalIp} from "./dev_utils/getLocalIp.js";
+import path from "path";
 
 // Определяем рабочие переменные
 const app = express();
@@ -45,6 +46,7 @@ async function startServer() {
 
   // Создание Vite сервера с HMR
   const vite = await createViteServer(VITE_SERVER_CONFIG(PATHS.DEV_DIR));
+  app.use('/assets', express.static(path.resolve('site/assets')));
   app.use(vite.middlewares);
 
   // Получение пути к шаблону и копирование файлов

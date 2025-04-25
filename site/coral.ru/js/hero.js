@@ -1,7 +1,9 @@
 import {hostReactAppReady} from "../../common/js/usefuls.js";
 
-hostReactAppReady().then(() => {
+(async () => {
+  await hostReactAppReady();
+
   const a = document.querySelector('h1')
   a.textContent = 'Hello World';
   console.log(a)
-})
+})()
