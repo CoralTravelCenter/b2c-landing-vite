@@ -46,7 +46,7 @@ async function startServer() {
 
   // Создание Vite сервера с HMR
   const vite = await createViteServer(VITE_SERVER_CONFIG(PATHS.DEV_DIR));
-  app.use('/assets', express.static(path.resolve('site/assets')));
+  app.use('/assets', express.static(path.resolve(`site/coral.ru/assets`)));
   app.use(vite.middlewares);
 
   // Получение пути к шаблону и копирование файлов
