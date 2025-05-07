@@ -15,7 +15,6 @@ export async function reloadSections(watcher, jsonFilePath, templatePath, devDir
   const configData = loadConfig(jsonFilePath, __dirname);
   watcher.unwatch('*');
   watcher.add(configData.sections);
-  console.log('Обновлен список секций:', configData.sections);
   await generateLanding(templatePath, configData, devDir);
   return configData;
 }

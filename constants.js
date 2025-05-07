@@ -43,6 +43,7 @@ export const MESSAGES = {
 export const PATH_TEMPLATES = {
   // Шаблон для пути к брендовому шаблону
   brandTemplatePath: (brand) => `${DIRECTORIES.WEB_ROOT}/${brand}/content.desktop.html`,
+  brandTemplateMobilePath: (brand) => `${DIRECTORIES.WEB_ROOT}/${brand}/content.mobile.html`,
 
   // Остальные шаблоны
   assetCss: (sectionName) => `${DIRECTORIES.ASSETS}/${sectionName}.css`,

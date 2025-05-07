@@ -19,6 +19,8 @@
     "cheerio": "^1.0.0",
     "chokidar": "^4.0.3",
     "express": "^4.18.2",
+    "express-useragent": "^1.0.15",
+    "express-useragent-middleware": "^0.3.2",
     "figures": "^6.1.0",
     "find-up": "^7.0.0",
     "glob": "^11.0.2",

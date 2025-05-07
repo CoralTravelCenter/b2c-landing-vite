@@ -1,0 +1,198 @@
+:root {
+  /* Base color */
+  --color-base-light: #FFFFFF;
+  --color-base-dark: #242A2C;
+  --color-base-light-alt: #F3F3F4;
+  --color-base-dark-alt: #121212;
+  --color-base-overlay: rgba(0, 0, 0, 0.6);
+  --color-base-break-light: rgba(0, 0, 0, 0.06);
+  --color-base-break-dark: rgba(255, 255, 255, 0.06);
+  --color-base-item-bg-1-light: #F0CAF1;
+  --color-base-item-bg-1-dark: #29334A;
+  --color-base-item-bg-2-light: #F2F0D5;
+  --color-base-item-bg-2-dark: #35394A;
+  --color-base-item-bg-3-light: #D1E9F6;
+  --color-base-item-bg-3-dark: #29334A;
+  --color-base-item-bg-4-light: #D2E1F9;
+  --color-base-item-bg-4-dark: #121F40;
+
+  /* Text color */
+  --color-text-dark: #000000;
+  --color-text-light: #FFFFFF;
+  --color-text-alt: #707070;
+  --color-text-highlight: #002D9D;
+
+  /* Button color */
+  --color-btn-bg-default: #F8F8F8;
+  --color-btn-bg-dark: #E0E0E0;
+  --color-btn-bg-hover: #077DAD;
+  --color-btn-bg-focused: #3C92F7;
+  --color-btn-border-focused: #002D9D;
+  --color-btn-text-disabled: rgba(0, 0, 0, 0.25);
+  --color-btn-bg-disabled: rgba(0, 0, 0, 0.03);
+  --color-btn-border-disabled: rgba(0, 0, 0, 0.03);
+  --color-btn-border-default: rgba(0, 0, 0, 0.1);
+  --color-btn-border-ghost-hover: #077DAD;
+  --color-btn-bg-ghost-hover: #077DAD;
+  --color-btn-border-ghost-pressed: #005B85;
+  --color-btn-bg-ghost-pressed: #005B85;
+  --color-btn-bg-alt: #FFFFFF;
+  --color-btn-text-alt: #002D9D;
+  --color-btn-border-clear-focused: #3C92F7;
+  --color-btn-border-clear: #002D9D;
+  --color-btn-text-clear: #002D9D;
+
+  /* Arrow color */
+  --color-arrow-active: #353535;
+  --color-arrow-hover: #353535;
+  --color-arrow-disabled: rgba(0, 0, 0, 0.15);
+  --color-arrow-bg-light: #FFFFFF;
+
+  /* Tabs color */
+  --color-tabs-bg-active: #F4F4F4;
+  --color-tabs-text-dark: #000000;
+  --color-tabs-text-light: #FFFFFF;
+
+  /* Pagination color */
+  --color-pagination-bg-active: #077DAD;
+  --color-pagination-bg-default: rgba(0, 0, 0, 0.03);
+  --color-pagination-bg-hover: #3C92F7;
+
+  /* Brand colors */
+  --color-brand-pacific-blue: #0033A0;
+  --color-brand-logo-text: #0033A0;
+  --color-brand-mark-1: #F0D8BC;
+  --color-brand-mark-2: #FCD8BC;
+  --color-brand-mark-3: #F8AB6D;
+  --color-brand-mark-4: #D0633C;
+  --color-brand-mark-5: #74B0CD;
+
+  /* Header/Footer color */
+  --color-header-border: #D0D0D9;
+  --color-header-item-bg: rgba(0, 0, 0, 0);
+  --color-header-bg-elevation-level-1: #F3F3F4;
+  --color-header-bg-elevation-level-2: #F3F3F4;
+  --color-header-bg-elevation-level-3: #FFFFFF;
+  --color-header-bg-elevation-level-4: #FFFFFF;
+  --color-header-bg-elevation-level-5: #FFFFFF;
+  --color-header-form-icon-light: #D1D1D1;
+  --color-header-form-checkbox-border: #000000;
+  --color-header-text-accent: #002D9D;
+  --color-header-btn-bg-hover: #077DAD;
+  --color-header-range-border-pressed: #0070B1;
+  --color-header-text-disabled: #707070;
+  --color-header-icon-accent-alt: #002D9D;
+  --color-header-icon-accent: #F0D8BC;
+  --color-header-bg-selected: #D2E1F9;
+  --color-header-bg-hover: #E5EFFD;
+  --color-header-bg-charter: #00B6E9;
+  --color-header-bg-charter-hover: #006B99;
+
+  /* Global Units */
+  --size-unit: 4px;
+  --em: 16px;
+
+  /* Font Sizes */
+  --font-heading-1: 36px;
+  --font-heading-2: 32px;
+  --font-heading-3: 28px;
+  --font-heading-4: 24px;
+  --font-heading-5: 20px;
+  --font-heading-6: 16px;
+
+  --font-body-medium: 16px;
+  --font-body-semibold: 16px;
+  --font-body-bold: 16px;
+  --font-body-extrabold: 16px;
+
+  --font-btn-small: 14px;
+  --font-btn-medium: 16px;
+  --font-btn-large: 20px;
+
+  --font-kv-title-1: 50px;
+  --font-kv-title-m: 40px;
+  --font-kv-title-s: 32px;
+  --font-kv-placeholder-l: 24px;
+  --font-kv-placeholder-m: 20px;
+  --font-kv-subtitle-m: 16px;
+
+  /* Font Tokens */
+  --font-family: 'Manrope', sans-serif;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-size-body: 16px;
+  --line-height-body: 24px;
+
+  --font-size-btn: 16px;
+  --line-height-btn: 24px;
+
+  --font-size-heading-1: 36px;
+  --line-height-heading-1: 52px;
+
+  --font-size-heading-2: 32px;
+  --line-height-heading-2: 48px;
+
+  --font-size-heading-3: 28px;
+  --line-height-heading-3: 44px;
+
+  --font-size-heading-4: 24px;
+  --line-height-heading-4: 36px;
+
+  /* Border Radius */
+  --radius-xxxl: 48px;
+  --radius-xxl: 40px;
+  --radius-xl: 32px;
+  --radius-lg: 24px;
+  --radius-md: 20px;
+  --radius-base: 16px;
+  --radius-sm: 8px;
+  --radius-xs: 4px;
+  --radius-xxs: 2px;
+  --radius-button: 8px;
+
+  /* Box Shadow */
+  --box-shadow-item: 0px 4px 14px -2px rgba(0, 0, 0, 0.08);
+
+  /* Paddings */
+  --padding-xxxl: 48px;
+  --padding-xxl: 40px;
+  --padding-xl: 32px;
+  --padding-lg: 24px;
+  --padding-md: 20px;
+  --padding-base: 16px;
+  --padding-sm: 12px;
+  --padding-xs: 8px;
+  --padding-xxs: 4px;
+
+  /* Margins */
+  --margin-xxxl: 48px;
+  --margin-xxl: 40px;
+  --margin-xl: 32px;
+  --margin-lg: 24px;
+  --margin-md: 20px;
+  --margin-base: 16px;
+  --margin-sm: 12px;
+  --margin-xs: 8px;
+  --margin-xxs: 4px;
+
+  /* Layout Grid Dimensions */
+  --grid-desktop-l: 1920px;
+  --grid-desktop-s: 1440px;
+  --grid-tablet-l: 1024px;
+  --grid-tablet-m: 768px;
+  --grid-mobile-l: 428px;
+
+  --grid-desktop-l-content: 1764px;
+  --grid-desktop-s-content: 1326px;
+  --grid-tablet-l-content: 894px;
+  --grid-tablet-m-content: 636px;
+  --grid-mobile-l-content: 396px;
+
+  /* KV Ratios */
+  --ratio-428: 99/130;
+  --ratio-768: 19/10;
+  --ratio-1024: 216/95;
+  --ratio-1280: 92/35;
+  --ratio-1440: 171/65;
+}

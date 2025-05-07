@@ -9,11 +9,11 @@ import {loadConfig} from "./dev_utils/loadConfig.js";
 import {reloadSections} from "./dev_utils/reloadSections.js";
 import {copyTemplateFiles} from "./dev_utils/copyTemplateFiles.js";
 import {prepareDevDirectory} from "./dev_utils/prepareDevDirectory.js";
-
 import {DEFAULT_PORT, JSON_PATH, MESSAGES, PATHS} from './constants.js';
 import {VITE_SERVER_CONFIG, WATCHER_SETTINGS} from './configs.js';
 import {getLocalIp} from "./dev_utils/getLocalIp.js";
 import path from "path";
+import useragent from "express-useragent";
 
 // Определяем рабочие переменные
 const app = express();
@@ -44,7 +44,7 @@ async function startServer() {
   // Подготовка директории для разработки
   prepareDevDirectory(PATHS.DEV_DIR);
 
-  // Создание Vite сервера с HMR
+  // Создание Vite сервера
   const vite = await createViteServer(VITE_SERVER_CONFIG(PATHS.DEV_DIR));
   app.use('/assets', express.static(path.resolve(`site/coral.ru/assets`)));
   app.use(vite.middlewares);
@@ -66,7 +66,6 @@ async function startServer() {
   // Отслеживание изменений в конфигурационном файле
   const configWatcher = chokidar.watch(JSON_PATH, WATCHER_SETTINGS);
   configWatcher.on('change', async () => {
-    console.log(MESSAGES.CONFIG_CHANGED);
     try {
       configData = await reloadSections(watcher, JSON_PATH, templatePath, PATHS.DEV_DIR, PATHS.__dirname);
     } catch (error) {
@@ -76,6 +75,7 @@ async function startServer() {
 
   // Запуск сервера
   const PORT = process.env.PORT || DEFAULT_PORT;
+  console.log(useragent.express())
   app.listen(PORT, '0.0.0.0', () => {
     console.log('+++ Сервер запущен +++')
     console.log(`CWD: ${PATHS.__dirname}`)

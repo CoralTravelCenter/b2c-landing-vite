@@ -74,6 +74,7 @@ export function VITE_SERVER_CONFIG(devDir) {
 export const WATCHER_SETTINGS = {
   persistent: true,
   ignoreInitial: true,
+  usePolling: true,
   awaitWriteFinish: {
     stabilityThreshold: 300,
     pollInterval: 100,

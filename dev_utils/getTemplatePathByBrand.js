@@ -10,18 +10,19 @@ import {PATH_TEMPLATES} from '../constants.js';
  * @param {string} rootDir - Корневая директория проекта.
  * @returns {string} Полный путь к шаблону HTML для указанного бренда.
  */
+
 export function getTemplatePathByBrand(jsonFilePath, rootDir) {
   try {
     const config = JSON.parse(fs.readFileSync(jsonFilePath, 'utf-8'));
     const brand = config.env.brand
 
-    const templatePath = path.join(rootDir, PATH_TEMPLATES.brandTemplatePath(brand));
+    let templatePath = path.join(rootDir, PATH_TEMPLATES.brandTemplatePath(brand));
+
 
     if (!fs.existsSync(templatePath)) {
       throw new Error(`Шаблон для бренда "${brand}" не найден: ${templatePath}`);
     }
 
-   
     return templatePath;
 
   } catch (error) {
