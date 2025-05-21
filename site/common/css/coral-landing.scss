@@ -1,2 +1,22 @@
 @use 'variables';
 @use 'layout';
+
+section.hero > article .contenu {
+  .prime-btn {
+    border-radius: 48px;
+    background-color: var(--color-btn-bg-default);
+    height: 48px;
+    padding: 12px 20px;
+    border: none;
+    color: var(--color-btn-text-light);
+    font-size: var(--font-size-body);
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  .prime-btn.light {
+    background-color: var(--color-btn-text-light);
+    color: var(--color-text-dark);
+  }
+}

@@ -5,7 +5,8 @@
     "cdnAssetsURL": ""
   },
   "sections": [
+    "./site/coral.ru/markup/global.html",
     "./site/coral.ru/markup/kv.html",
-    "./site/coral.ru/markup/hero2.html"
+    "./site/coral.ru/markup/text.html"
   ]
 }

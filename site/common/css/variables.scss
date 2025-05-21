@@ -1,160 +1,144 @@
-:root {
-  /* Base color */
-  --color-base-light: #FFFFFF;
-  --color-base-dark: #242A2C;
-  --color-base-light-alt: #F3F3F4;
-  --color-base-dark-alt: #121212;
-  --color-base-overlay: rgba(0, 0, 0, 0.6);
-  --color-base-break-light: rgba(0, 0, 0, 0.06);
-  --color-base-break-dark: rgba(255, 255, 255, 0.06);
-  --color-base-item-bg-1-light: #F0CAF1;
-  --color-base-item-bg-1-dark: #29334A;
-  --color-base-item-bg-2-light: #F2F0D5;
-  --color-base-item-bg-2-dark: #35394A;
-  --color-base-item-bg-3-light: #D1E9F6;
-  --color-base-item-bg-3-dark: #29334A;
-  --color-base-item-bg-4-light: #D2E1F9;
-  --color-base-item-bg-4-dark: #121F40;
 
-  /* Text color */
+:root {
+  /* ========================= */
+  /*        BASE COLORS        */
+  /* ========================= */
+  --color-base-light: #FFFFFF;
+  --color-base-light-alt: #F3F9FF;
+  --color-base-item-overlay: rgba(0, 0, 0, 0.5);
+  --color-base-hr-break: rgba(0, 0, 0, 0.04);
+  --color-base-item-bg-1: #C2E4F6;
+  --color-base-item-bg-2: #F2DFD5;
+  --color-base-item-bg-3: #F7EDDB;
+  --color-base-item-bg-4: #D2E9FB;
+
+  /* ========================= */
+  /*        TEXT COLORS        */
+  /* ========================= */
   --color-text-dark: #000000;
   --color-text-light: #FFFFFF;
-  --color-text-alt: #707070;
-  --color-text-highlight: #002D9D;
+  --color-text-alt: rgba(0, 0, 0, 0.85);
+  --color-text-highlight: #0092D0;
 
-  /* Button color */
-  --color-btn-bg-default: #F8F8F8;
-  --color-btn-bg-dark: #E0E0E0;
+  /* ========================= */
+  /*      BUTTON COLORS        */
+  /* ========================= */
+  --color-btn-bg-default: #0092D0;
+  --color-btn-text-light: #FFFFFF;
+  --color-btn-text-dark: #000000;
   --color-btn-bg-hover: #077DAD;
-  --color-btn-bg-focused: #3C92F7;
-  --color-btn-border-focused: #002D9D;
+  --color-btn-bg-focused: #33C2FF;
+  --color-btn-border-focused: #0092D0;
   --color-btn-text-disabled: rgba(0, 0, 0, 0.25);
-  --color-btn-bg-disabled: rgba(0, 0, 0, 0.03);
-  --color-btn-border-disabled: rgba(0, 0, 0, 0.03);
-  --color-btn-border-default: rgba(0, 0, 0, 0.1);
+  --color-btn-bg-pressed: #0063B3;
+  --color-btn-bg-disabled: rgba(0, 0, 0, 0.04);
+  --color-btn-border-disabled: rgba(0, 0, 0, 0.015);
+  --color-btn-border-ghost-default: rgba(0, 0, 0, 0.015);
   --color-btn-border-ghost-hover: #077DAD;
-  --color-btn-bg-ghost-hover: #077DAD;
-  --color-btn-border-ghost-pressed: #005B85;
-  --color-btn-bg-ghost-pressed: #005B85;
+  --color-btn-border-ghost-pressed: #0063B3;
+  --color-btn-text-ghost-hover: #077DAD;
+  --color-btn-text-ghost-focused: #33C2FF;
+  --color-btn-text-ghost-pressed: #0063B3;
   --color-btn-bg-alt: #FFFFFF;
-  --color-btn-text-alt: #002D9D;
-  --color-btn-border-clear-focused: #3C92F7;
-  --color-btn-border-clear: #002D9D;
-  --color-btn-text-clear: #002D9D;
+  --color-btn-text-alt: #000000;
+  --color-btn-text-clear: #0092D0;
+  --color-btn-border-clear-focused: #33C2FF;
+  --color-btn-border-pressed: #0063B3;
 
-  /* Arrow color */
-  --color-arrow-active: #353535;
-  --color-arrow-hover: #353535;
+  /* ========================= */
+  /*      BORDERS         */
+  /* ========================= */
+  --border-radius-xxxl: 48px;
+  --border-radius-xxl: 40px;
+  --border-radius-xl: 32px;
+  --border-radius-lg: 24px;
+  --border-radius-md: 20px;
+  --border-radius-base: 16px;
+  --border-radius-sm: 12px;
+  --border-radius-xs: 8px;
+  --border-radius-xxs: 4px;
+  --border-radius-xxxs: 2px;
+  --border-radius-button: 8px;
+
+  /* ========================= */
+  /*      ARROW COLORS         */
+  /* ========================= */
+  --color-arrow-active: #535353;
+  --color-arrow-hover: #33C2FF;
   --color-arrow-disabled: rgba(0, 0, 0, 0.15);
+  --color-arrow-border-disabled: rgba(0, 0, 0, 0.15);
   --color-arrow-bg-light: #FFFFFF;
 
-  /* Tabs color */
-  --color-tabs-bg-active: #F4F4F4;
+  /* ========================= */
+  /*       TABS COLORS         */
+  /* ========================= */
+  --color-tabs-bg-active: #E84F0E;
   --color-tabs-text-dark: #000000;
   --color-tabs-text-light: #FFFFFF;
 
-  /* Pagination color */
+  /* ========================= */
+  /*    PAGINATION COLORS      */
+  /* ========================= */
   --color-pagination-bg-active: #077DAD;
-  --color-pagination-bg-default: rgba(0, 0, 0, 0.03);
-  --color-pagination-bg-hover: #3C92F7;
+  --color-pagination-bg-default: rgba(51, 194, 255, 0.3);
+  --color-pagination-bg-hover: #33C2FF;
 
-  /* Brand colors */
-  --color-brand-pacific-blue: #0033A0;
-  --color-brand-logo-text: #0033A0;
-  --color-brand-mark-1: #F0D8BC;
-  --color-brand-mark-2: #FCD8BC;
-  --color-brand-mark-3: #F8AB6D;
-  --color-brand-mark-4: #D0633C;
-  --color-brand-mark-5: #74B0CD;
+  /* ========================= */
+  /*     BRAND COLORS          */
+  /* ========================= */
+  --color-brand-pacific-blue: #0093D0;
+  --color-brand-logo-text: #0093D0;
+  --color-brand-mark-1: #EE762D;
+  --color-brand-mark-2: #FDCE86;
+  --color-brand-mark-3: #FAB60D;
+  --color-brand-mark-4: #E84E0F;
+  --color-brand-mark-5: #78ABDC;
+  --color-brand-mark-6: #0077B1;
 
-  /* Header/Footer color */
-  --color-header-border: #D0D0D9;
+  /* ========================= */
+  /*     HEADER COLORS         */
+  /* ========================= */
+  --color-header-text: #B2B2B2;
+  --color-header-icon: #535353;
+  --color-header-border: #D9D9D9;
   --color-header-item-bg: rgba(0, 0, 0, 0);
-  --color-header-bg-elevation-level-1: #F3F3F4;
-  --color-header-bg-elevation-level-2: #F3F3F4;
+  --color-header-bg-elevation-level-1: #F3F9FF;
+  --color-header-bg-elevation-level-2: #FFFFFF;
   --color-header-bg-elevation-level-3: #FFFFFF;
-  --color-header-bg-elevation-level-4: #FFFFFF;
+  --color-header-bg-elevation-level-4: #F2F2F2;
   --color-header-bg-elevation-level-5: #FFFFFF;
-  --color-header-form-icon-light: #D1D1D1;
-  --color-header-form-checkbox-border: #000000;
-  --color-header-text-accent: #002D9D;
-  --color-header-btn-bg-hover: #077DAD;
-  --color-header-range-border-pressed: #0070B1;
-  --color-header-text-disabled: #707070;
-  --color-header-icon-accent-alt: #002D9D;
-  --color-header-icon-accent: #F0D8BC;
-  --color-header-bg-selected: #D2E1F9;
-  --color-header-bg-hover: #E5EFFD;
-  --color-header-bg-charter: #00B6E9;
-  --color-header-bg-charter-hover: #006B99;
+  --color-header-form-icon-light: #FFFFFF;
+  --color-header-form-checkbox-border: #D9D9D9;
+  --color-header-tabs-accent: #0092D0;
+  --color-toggler-bg: #BFBFBF;
+  --color-toggler-main: #FFFFFF;
+  --color-header-range-bg: #F5F5F5;
+  --color-header-range-border-pressed: #007DB1;
+  --color-header-text-disabled: #B2B2B2;
+  --color-header-bg-accent: #FEF7E6;
+  --color-header-bg-accent-alt: #E6F4FF;
+  --color-header-icon-accent: #F9B515;
+  --color-header-bg-selected: #E6F4FF;
+  --color-header-bg-regular: #FCDF9C;
+  --color-header-bg-charter: #D9F7BE;
+  --color-header-bg-charter-alt: #006B99;
 
-  /* Global Units */
-  --size-unit: 4px;
-  --em: 16px;
-
-  /* Font Sizes */
-  --font-heading-1: 36px;
-  --font-heading-2: 32px;
-  --font-heading-3: 28px;
-  --font-heading-4: 24px;
-  --font-heading-5: 20px;
-  --font-heading-6: 16px;
-
-  --font-body-medium: 16px;
-  --font-body-semibold: 16px;
-  --font-body-bold: 16px;
-  --font-body-extrabold: 16px;
-
-  --font-btn-small: 14px;
-  --font-btn-medium: 16px;
-  --font-btn-large: 20px;
-
-  --font-kv-title-1: 50px;
-  --font-kv-title-m: 40px;
-  --font-kv-title-s: 32px;
-  --font-kv-placeholder-l: 24px;
-  --font-kv-placeholder-m: 20px;
-  --font-kv-subtitle-m: 16px;
-
-  /* Font Tokens */
-  --font-family: 'Manrope', sans-serif;
+  /* ========================= */
+  /*     FONT CONFIGURATION    */
+  /* ========================= */
+  --font-family: "Manrope", sans-serif;
   --font-weight-regular: 400;
   --font-weight-medium: 500;
   --font-weight-semibold: 600;
-  --font-size-body: 16px;
-  --line-height-body: 24px;
 
-  --font-size-btn: 16px;
-  --line-height-btn: 24px;
+  /* ========================= */
+  /*     BOX SHADOWS           */
+  /* ========================= */
+  --box-shadow-item: 0px 10px 20px rgba(0, 0, 0, 0.1);
 
-  --font-size-heading-1: 36px;
-  --line-height-heading-1: 52px;
-
-  --font-size-heading-2: 32px;
-  --line-height-heading-2: 48px;
-
-  --font-size-heading-3: 28px;
-  --line-height-heading-3: 44px;
-
-  --font-size-heading-4: 24px;
-  --line-height-heading-4: 36px;
-
-  /* Border Radius */
-  --radius-xxxl: 48px;
-  --radius-xxl: 40px;
-  --radius-xl: 32px;
-  --radius-lg: 24px;
-  --radius-md: 20px;
-  --radius-base: 16px;
-  --radius-sm: 8px;
-  --radius-xs: 4px;
-  --radius-xxs: 2px;
-  --radius-button: 8px;
-
-  /* Box Shadow */
-  --box-shadow-item: 0px 4px 14px -2px rgba(0, 0, 0, 0.08);
-
-  /* Paddings */
+  /* ========================= */
+  /*        PADDINGS           */
+  /* ========================= */
   --padding-xxxl: 48px;
   --padding-xxl: 40px;
   --padding-xl: 32px;
@@ -164,8 +148,11 @@
   --padding-sm: 12px;
   --padding-xs: 8px;
   --padding-xxs: 4px;
+  --padding-xxxs: 2px;
 
-  /* Margins */
+  /* ========================= */
+  /*         MARGINS           */
+  /* ========================= */
   --margin-xxxl: 48px;
   --margin-xxl: 40px;
   --margin-xl: 32px;
@@ -175,24 +162,159 @@
   --margin-sm: 12px;
   --margin-xs: 8px;
   --margin-xxs: 4px;
+  --margin-xxxs: 2px;
 
-  /* Layout Grid Dimensions */
+  /* ========================= */
+  /*         GRID SIZES        */
+  /* ========================= */
   --grid-desktop-l: 1920px;
-  --grid-desktop-s: 1440px;
-  --grid-tablet-l: 1024px;
-  --grid-tablet-m: 768px;
-  --grid-mobile-l: 428px;
+  --grid-desktop-s: 1280px;
+  --grid-tablet-h: 1024px;
+  --grid-tablet-v: 768px;
+  --grid-mobile: 428px;
 
-  --grid-desktop-l-content: 1764px;
-  --grid-desktop-s-content: 1326px;
-  --grid-tablet-l-content: 894px;
-  --grid-tablet-m-content: 636px;
-  --grid-mobile-l-content: 396px;
+  --grid-desktop-l-content: 1368px;
+  --grid-desktop-s-content: 1104px;
+  --grid-tablet-h-content: 864px;
+  --grid-tablet-v-content: 608px;
+  --grid-mobile-content: 396px;
 
-  /* KV Ratios */
-  --ratio-428: 99/130;
-  --ratio-768: 19/10;
-  --ratio-1024: 216/95;
-  --ratio-1280: 92/35;
-  --ratio-1440: 171/65;
+  /* ========================= */
+  /*     TYPOGRAPHY TOKENS     */
+  /* ========================= */
+  --font-heading-1: 2.25rem;
+  --line-height-heading-1: 2.75rem;
+
+  --font-heading-2: 2rem;
+  --line-height-heading-2: 2.5rem;
+
+  --font-heading-3: 1.75rem;
+  --line-height-heading-3: 2.25rem;
+
+  --font-heading-4: 1.5rem;
+  --line-height-heading-4: 2rem;
+
+  --font-heading-5: 1.25rem;
+  --line-height-heading-5: 1.75rem;
+
+  --font-heading-6: 1.25rem;
+  --line-height-heading-6: 2rem;
+
+  --font-body: 1rem;
+  --line-height-body: 1.5rem;
+
+  --font-label: 0.75rem;
+  --line-height-label: 1.25rem;
+
+  --font-btn-500: 1rem;
+  --line-height-btn-500: 1.5rem;
+
+  --font-btn-600: 1rem;
+  --line-height-btn-600: 1.5rem;
+
+  --font-tabs-400: 1rem;
+  --line-height-tabs-400: 1.5rem;
+
+  --font-tabs-600: 1rem;
+  --line-height-tabs-600: 1.5rem;
+
+  --font-kv-title-l: 3.5rem;
+  --line-height-kv-title-l: 4rem;
+
+  --font-kv-title-m: 2.5rem;
+  --line-height-kv-title-m: 3rem;
+
+  --font-kv-title-s: 2rem;
+  --line-height-kv-title-s: 2.5rem;
+
+  --font-kv-placeholder-l: 1.5rem;
+  --line-height-kv-placeholder-l: 2rem;
+
+  --font-kv-placeholder-m: 1.25rem;
+  --line-height-kv-placeholder-m: 1.75rem;
+
+  --font-kv-subline-l: 1.25rem;
+  --line-height-kv-subline-l: 1.75rem;
+
+  --font-kv-subline-m: 1rem;
+  --line-height-kv-subline-m: 1.5rem;
 }
+
+//@media (prefers-color-scheme: dark) {
+//  :root {
+//    --color-base-light: #24242C;
+//    --color-base-light-alt: #121212;
+//    --color-base-item-overlay: rgba(0, 0, 0, 0.5);
+//    --color-base-hr-break: rgba(255, 255, 255, 0.1);
+//    --color-base-item-bg-1: #124B78;
+//    --color-base-item-bg-2: #396384;
+//    --color-base-item-bg-3: #506A7E;
+//    --color-base-item-bg-4: #124B78;
+//
+//    --color-text-dark: #FFFFFF;
+//    --color-text-light: #FFFFFF;
+//    --color-text-alt: rgba(255, 255, 255, 0.85);
+//    --color-text-highlight: #33C2FF;
+//
+//    --color-btn-bg-default: #1668DC;
+//    --color-btn-text-light: #FFFFFF;
+//    --color-btn-text-dark: rgba(255, 255, 255, 0.85);
+//    --color-btn-bg-hover: #0092D0;
+//    --color-btn-bg-focused: #33C2FF;
+//    --color-btn-border-focused: #1668DC;
+//    --color-btn-text-disabled: rgba(255, 255, 255, 0.4);
+//    --color-btn-bg-pressed: #077DAD;
+//    --color-btn-bg-disabled: rgba(255, 255, 255, 0.1);
+//    --color-btn-border-disabled: rgba(255, 255, 255, 0.4);
+//    --color-btn-border-ghost-default: rgba(255, 255, 255, 0.85);
+//    --color-btn-border-ghost-hover: #0092D0;
+//    --color-btn-border-ghost-pressed: #077DAD;
+//    --color-btn-text-ghost-hover: #0092D0;
+//    --color-btn-text-ghost-focused: #33C2FF;
+//    --color-btn-text-ghost-pressed: #077DAD;
+//    --color-btn-bg-alt: #FFFFFF;
+//    --color-btn-text-alt: rgba(0, 0, 0, 0.85);
+//    --color-btn-text-clear: #1668DC;
+//    --color-btn-border-clear-focused: #33C2FF;
+//    --color-btn-border-pressed: #077DAD;
+//
+//    --color-arrow-active: #535353;
+//    --color-arrow-hover: #33C2FF;
+//    --color-arrow-disabled: rgba(255, 255, 255, 0.4);
+//    --color-arrow-border-disabled: rgba(255, 255, 255, 0.4);
+//    --color-arrow-bg-light: #FFFFFF;
+//
+//    --color-tabs-bg-active: #EE762D;
+//    --color-tabs-text-dark: #FFFFFF;
+//    --color-tabs-text-light: #FFFFFF;
+//
+//    --color-pagination-bg-active: #077DAD;
+//    --color-pagination-bg-default: rgba(51, 194, 255, 0.3);
+//    --color-pagination-bg-hover: #33C2FF;
+//
+//    --color-header-text: #B2B2B2;
+//    --color-header-icon: #EFEFEF;
+//    --color-header-border: #24242C;
+//    --color-header-item-bg: #3A3A41;
+//    --color-header-bg-elevation-level-1: #121212;
+//    --color-header-bg-elevation-level-2: #24242C;
+//    --color-header-bg-elevation-level-3: #363642;
+//    --color-header-bg-elevation-level-4: #444454;
+//    --color-header-bg-elevation-level-5: #525266;
+//    --color-header-form-icon-light: #FFFFFF;
+//    --color-header-form-checkbox-border: #FFFFFF;
+//    --color-header-tabs-accent: #1668DC;
+//    --color-toggler-bg: #1668DC;
+//    --color-toggler-main: #FFFFFF;
+//    --color-header-range-bg: #363642;
+//    --color-header-range-border-pressed: #FFFFFF;
+//    --color-header-text-disabled: #363642;
+//    --color-header-bg-accent: #525266;
+//    --color-header-bg-accent-alt: #444454;
+//    --color-header-icon-accent: #F9B515;
+//    --color-header-bg-selected: #1668DC;
+//    --color-header-bg-regular: #FCDF9C;
+//    --color-header-bg-charter: #D9F7BE;
+//    --color-header-bg-charter-alt: #32C2FF;
+//  }
+//}
