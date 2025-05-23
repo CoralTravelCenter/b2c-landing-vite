@@ -9,10 +9,11 @@ section.hero > article .contenu {
     padding: 12px 20px;
     border: none;
     color: var(--color-btn-text-light);
-    font-size: var(--font-size-body);
+    font-size: var(--font-body);
     display: flex;
     align-items: center;
     cursor: pointer;
+    margin: 0;
   }
 
   .prime-btn.light {

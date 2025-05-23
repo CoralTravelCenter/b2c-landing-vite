@@ -139,6 +139,7 @@
   /* ========================= */
   /*        PADDINGS           */
   /* ========================= */
+  --padding-xxxxl: 64px;
   --padding-xxxl: 48px;
   --padding-xxl: 40px;
   --padding-xl: 32px;
@@ -182,62 +183,71 @@
   /* ========================= */
   /*     TYPOGRAPHY TOKENS     */
   /* ========================= */
-  --font-heading-1: 2.25rem;
-  --line-height-heading-1: 2.75rem;
+  --font-heading-1: 36px; /* 2.25rem * 16px */
+  --line-height-heading-1: 44px; /* 2.75rem * 16px */
 
-  --font-heading-2: 2rem;
-  --line-height-heading-2: 2.5rem;
+  --font-heading-2: 32px; /* 2rem * 16px */
+  --line-height-heading-2: 40px; /* 2.5rem * 16px */
 
-  --font-heading-3: 1.75rem;
-  --line-height-heading-3: 2.25rem;
+  --font-heading-3: 28px; /* 1.75rem * 16px */
+  --line-height-heading-3: 36px; /* 2.25rem * 16px */
 
-  --font-heading-4: 1.5rem;
-  --line-height-heading-4: 2rem;
+  --font-heading-4: 24px; /* 1.5rem * 16px */
+  --line-height-heading-4: 32px; /* 2rem * 16px */
 
-  --font-heading-5: 1.25rem;
-  --line-height-heading-5: 1.75rem;
+  --font-heading-5: 20px; /* 1.25rem * 16px */
+  --line-height-heading-5: 28px; /* 1.75rem * 16px */
 
-  --font-heading-6: 1.25rem;
-  --line-height-heading-6: 2rem;
+  --font-heading-6: 20px; /* 1.25rem * 16px */
+  --line-height-heading-6: 32px; /* 2rem * 16px */
 
-  --font-body: 1rem;
-  --line-height-body: 1.5rem;
+  --font-body: 16px; /* 1rem * 16px */
+  --line-height-body: 24px; /* 1.5rem * 16px */
 
-  --font-label: 0.75rem;
-  --line-height-label: 1.25rem;
+  --font-label: 12px; /* 0.75rem * 16px */
+  --line-height-label: 20px; /* 1.25rem * 16px */
 
-  --font-btn-500: 1rem;
-  --line-height-btn-500: 1.5rem;
+  --font-btn-500: 16px; /* 1rem * 16px */
+  --line-height-btn-500: 24px; /* 1.5rem * 16px */
 
-  --font-btn-600: 1rem;
-  --line-height-btn-600: 1.5rem;
+  --font-btn-600: 16px; /* 1rem * 16px */
+  --line-height-btn-600: 24px; /* 1.5rem * 16px */
 
-  --font-tabs-400: 1rem;
-  --line-height-tabs-400: 1.5rem;
+  --font-tabs-400: 16px; /* 1rem * 16px */
+  --line-height-tabs-400: 24px; /* 1.5rem * 16px */
 
-  --font-tabs-600: 1rem;
-  --line-height-tabs-600: 1.5rem;
+  --font-tabs-600: 16px; /* 1rem * 16px */
+  --line-height-tabs-600: 24px; /* 1.5rem * 16px */
 
-  --font-kv-title-l: 3.5rem;
-  --line-height-kv-title-l: 4rem;
+  --font-kv-title-l: 56px; /* 3.5rem * 16px */
+  --line-height-kv-title-l: 64px; /* 4rem * 16px */
 
-  --font-kv-title-m: 2.5rem;
-  --line-height-kv-title-m: 3rem;
+  --font-kv-title-m: 40px; /* 2.5rem * 16px */
+  --line-height-kv-title-m: 48px; /* 3rem * 16px */
 
-  --font-kv-title-s: 2rem;
-  --line-height-kv-title-s: 2.5rem;
+  --font-kv-title-s: 32px; /* 2rem * 16px */
+  --line-height-kv-title-s: 40px; /* 2.5rem * 16px */
 
-  --font-kv-placeholder-l: 1.5rem;
-  --line-height-kv-placeholder-l: 2rem;
+  --font-kv-placeholder-l: 24px; /* 1.5rem * 16px */
+  --line-height-kv-placeholder-l: 32px; /* 2rem * 16px */
 
-  --font-kv-placeholder-m: 1.25rem;
-  --line-height-kv-placeholder-m: 1.75rem;
+  --font-kv-placeholder-m: 20px; /* 1.25rem * 16px */
+  --line-height-kv-placeholder-m: 28px; /* 1.75rem * 16px */
 
-  --font-kv-subline-l: 1.25rem;
-  --line-height-kv-subline-l: 1.75rem;
+  --font-kv-subline-l: 20px; /* 1.25rem * 16px */
+  --line-height-kv-subline-l: 28px; /* 1.75rem * 16px */
 
-  --font-kv-subline-m: 1rem;
-  --line-height-kv-subline-m: 1.5rem;
+  --font-kv-subline-m: 16px; /* 1rem * 16px */
+  --line-height-kv-subline-m: 24px; /* 1.5rem * 16px */
+
+  /* ========================= */
+  /*          RATIOS           */
+  /* ========================= */
+  --ratio-1440: 171/65;
+  --ratio-1280: 8/3;
+  --ratio-1024: 216/95;
+  --ratio-768: 19/10;
+  --ratio-428: 99/130;
 }
 
 //@media (prefers-color-scheme: dark) {

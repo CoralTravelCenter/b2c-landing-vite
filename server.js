@@ -13,7 +13,6 @@ import {DEFAULT_PORT, JSON_PATH, MESSAGES, PATHS} from './constants.js';
 import {VITE_SERVER_CONFIG, WATCHER_SETTINGS} from './configs.js';
 import {getLocalIp} from "./dev_utils/getLocalIp.js";
 import path from "path";
-import useragent from "express-useragent";
 
 // Определяем рабочие переменные
 const app = express();
@@ -75,7 +74,6 @@ async function startServer() {
 
   // Запуск сервера
   const PORT = process.env.PORT || DEFAULT_PORT;
-  console.log(useragent.express())
   app.listen(PORT, '0.0.0.0', () => {
     console.log('+++ Сервер запущен +++')
     console.log(`CWD: ${PATHS.__dirname}`)

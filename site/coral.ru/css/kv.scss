@@ -1,3 +1,5 @@
+@use "../../common/css/mixins";
+
 section.kv > article .contenu {
   .kv-main-banner {
     position: relative;
@@ -6,21 +8,7 @@ section.kv > article .contenu {
     border-radius: var(--border-radius-md);
     overflow: hidden;
 
-    @media (min-width: 768px) {
-      aspect-ratio: var(--ratio-768);
-    }
-
-    @media (min-width: 1024px) {
-      aspect-ratio: var(--ratio-1024);
-    }
-
-    @media (min-width: 1280px) {
-      aspect-ratio: var(--ratio-1280);
-    }
-
-    @media (min-width: 1440px) {
-      aspect-ratio: var(--ratio-1440);
-    }
+    @include mixins.kv-aspect-ratio;
 
     .content {
       position: absolute;
@@ -37,20 +25,71 @@ section.kv > article .contenu {
       z-index: 3;
       max-width: 1530px;
 
-      @media (min-width: 768px) {
-        padding: 32px;
-        justify-content: center;
-      }
-
-      &__headline {
-        font-weight: 300;
-        color: var(--color-text-light);
+      > *:not(.prime-btn, .content__location) {
         margin-bottom: 12px;
       }
 
-      &__text {
-        color: var(--color-text-light);
-        margin-bottom: 20px;
+      @media (min-width: 768px) {
+        padding: var(--padding-xl);
+        justify-content: center;
+      }
+
+      @media (min-width: 1024px) {
+        padding: var(--padding-xxxxl);
+      }
+
+      .prime-btn {
+        margin-top: 20px;
+
+        @media (min-width: 768px) {
+          margin-bottom: 24px;
+        }
+      }
+    }
+
+    .content__headline,
+    .content__text {
+      color: var(--color-text-light);
+    }
+
+    .content__headline {
+      font-weight: 300;
+      font-size: var(--font-kv-title-s);
+
+      @media (min-width: 1024px) {
+        font-size: var(--font-kv-title-m);
+      }
+
+      @media (min-width: 1440px) {
+        font-size: var(--font-kv-title-l);
+      }
+    }
+
+    .content__text {
+      font-size: var(--font-kv-subline-m);
+
+      @media (min-width: 1440px) {
+        font-size: var(--font-kv-subline-l);
+      }
+    }
+
+    .content__location {
+      position: absolute;
+      bottom: var(--padding-lg);
+      left: var(--padding-lg);
+      padding: 4px 8px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.80);
+      color: var(--color-text-dark);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0;
+
+      @media (min-width: 768px) {
+        right: var(--padding-base);
+        left: unset;
+        bottom: var(--padding-base);
       }
     }
 

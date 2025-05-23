@@ -1,16 +1,13 @@
+@use "../../common/css/mixins";
+
 *, *:after, *:before {
   box-sizing: border-box;
 }
 
 section.hero > article .contenu {
-  margin: 0 auto;
-  padding-block: calc(var(--padding-xxxl) / 2);
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-  gap: 16px;
+  @include mixins.hero-layout;
 
-  h1, h2, h3, h4, h5, p {
+  h1, h2, h3, h4, h5 {
     margin: 0;
   }
 
@@ -35,7 +32,8 @@ section.hero > article .contenu {
   }
 
   p {
-    font-size: var(--font-size-body);
+    margin: 0;
+    font-size: var(--font-body);
   }
 
   img {
