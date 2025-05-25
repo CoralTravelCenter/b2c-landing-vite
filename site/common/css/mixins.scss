@@ -22,20 +22,26 @@
   flex-direction: column;
   align-items: start;
   gap: 16px;
-  padding-block: calc(var(--padding-xxxl) / 2);
+  padding-block: calc(var(--padding_XXXL) / 2);
+}
 
-  @media (min-width: 768px) {
-    gap: 24px;
-    padding-block: var(--padding-xxxl);
+@mixin hero-layout-full-width {
+  position: relative;
+
+  > article .contenu {
+    z-index: 2;
+    position: relative;
   }
 
-  @media (min-width: 1024px) {
-    gap: 32px;
-    padding-block: calc(var(--padding-xxxxl) / 1.5);
-  }
-
-  @media (min-width: 1440px) {
-    gap: 40px;
-    padding-block: var(--padding-xxxxl);
+  &:after {
+    content: '';
+    width: 100vw;
+    height: 100%;
+    background: var(--background-color);
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
   }
 }

@@ -14,7 +14,8 @@ export async function injectSections(baseHtmlPath, htmlToInject) {
   const escaped = jsesc(htmlToInject, {
     quotes: 'double',
     isScriptContext: true,
-  })
+    json: true,
+  }).slice(1, -1);
 
   return html
     .replace('<!-- PAYLOAD PLACEHOLDER -->', htmlToInject)

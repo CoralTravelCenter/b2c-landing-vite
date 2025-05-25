@@ -1,7 +1,7 @@
 import chokidar from 'chokidar';
 import express from 'express';
 import open from 'open';
-import {existsSync} from 'fs'; // Импорт только нужного метода
+import {existsSync} from 'fs';
 import {createServer as createViteServer} from 'vite';
 import {getTemplatePathByBrand} from "./dev_utils/getTemplatePathByBrand.js";
 import {generateLanding} from "./dev_utils/generateLanding.js";
@@ -45,6 +45,20 @@ async function startServer() {
 
   // Создание Vite сервера
   const vite = await createViteServer(VITE_SERVER_CONFIG(PATHS.DEV_DIR));
+  let hadBuildError = false;
+
+  vite.config.logger.error = (...args) => {
+    hadBuildError = true;
+    console.log(...args);
+  };
+
+  vite.watcher.on('change', async () => {
+    if (hadBuildError) {
+      hadBuildError = false;
+      await generateLanding(templatePath, configData, PATHS.DEV_DIR);
+
+    }
+  });
   app.use('/assets', express.static(path.resolve(`site/coral.ru/assets`)));
   app.use(vite.middlewares);
 
@@ -57,8 +71,7 @@ async function startServer() {
 
   // Отслеживание изменений в секциях
   const watcher = chokidar.watch(configData.sections, WATCHER_SETTINGS);
-  watcher.on('change', async changedPath => {
-    console.log(MESSAGES.SECTION_CHANGED(changedPath));
+  watcher.on('change', async () => {
     await generateLanding(templatePath, configData, PATHS.DEV_DIR);
   });
 

@@ -12,28 +12,41 @@ section.hero > article .contenu {
   }
 
   h1 {
-    font-size: var(--font-heading-1);
+    font-size: var(--font_Size_KV_Title_S);
+    line-height: var(--font_Line_Height_Heading_1);
+
+    @media (min-width: 1024px) {
+      font-size: var(--font_Size_KV_Title_M);
+    }
+
+    @media (min-width: 1440px) {
+      font-size: var(--font_Size_KV_Title_L);
+    }
   }
 
   h2 {
-    font-size: var(--font-heading-2);
+    font-size: var(--font_Size_Heading_2);
+    line-height: var(--font_Line_Height_Heading_2);
   }
 
   h3 {
-    font-size: var(--font-heading-3);
+    font-size: var(--font_Size_Heading_3);
+    line-height: var(--font_Line_Height_Heading_3);
   }
 
   h4 {
-    font-size: var(--font-heading-4);
+    font-size: var(--font_Size_Heading_4);
+    line-height: var(--font_Line_Height_Heading_4);
   }
 
   h5 {
-    font-size: var(--font-heading-5);
+    font-size: var(--font_Size_Heading_5);
+    line-height: var(--font_Line_Height_Heading_5);
   }
 
   p {
     margin: 0;
-    font-size: var(--font-body);
+    font-size: var(--font_Size_Body);
   }
 
   img {
@@ -42,4 +55,13 @@ section.hero > article .contenu {
     object-fit: cover;
     display: block;
   }
+}
+
+section.hero.full-width {
+  --background-color: #fff;
+  @include mixins.hero-layout-full-width;
+}
+
+.row-container.layout-container-limit.center:has(section.full-width) {
+  overflow-x: visible;
 }
