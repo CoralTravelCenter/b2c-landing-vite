@@ -194,6 +194,23 @@ export async function vimeoAutoPlay(observerOptions = {}) {
 }
 
 /**
+ * Вставляет шаблон Vimeo-видео в указанный контейнер,
+ * используя переданные ID для десктопной и мобильной версии.
+ *
+ * @param {{ desktopId: string, mobileId: string }} ids - Объект с Vimeo ID.
+ * @param {HTMLElement} container - DOM-элемент, в который будет вставлен шаблон.
+ */
+export async function insertVimeoBox(ids, container) {
+  const tpl = document.getElementById("vimeoVideoBox");
+  const clone = tpl.content.cloneNode(true);
+
+  clone.querySelector(".hidden-on-mobile").dataset.vimeoVid = ids.desktopId;
+  clone.querySelector(".hidden-on-desktop").dataset.vimeoVid = ids.mobileId;
+
+  container.prepend(clone);
+}
+
+/**
  * Получает данные Next.js из DOM.
  * @returns {Object|undefined} Объект данных Next.js или undefined.
  */

@@ -1,6 +1,7 @@
 import * as cheerio from 'cheerio'
 import fs from 'fs'
 import path from 'path'
+import pug from 'pug'
 
 /**
  * Читает и обрабатывает HTML-файл секции
@@ -14,7 +15,12 @@ export async function processSection(sectionPath) {
       throw new Error(`Файл секции не найден: ${sectionPath}`)
     }
 
-    const content = fs.readFileSync(sectionPath, 'utf-8')
+    let content;
+    if (sectionPath.endsWith('.pug')) {
+      content = pug.renderFile(sectionPath);
+    } else {
+      content = fs.readFileSync(sectionPath, 'utf-8');
+    }
     const $ = cheerio.load(content)
     const sectionDir = path.dirname(sectionPath)
 

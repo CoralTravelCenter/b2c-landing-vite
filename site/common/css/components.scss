@@ -6,7 +6,7 @@ section.hero > article .contenu {
     padding: 12px 20px;
     border: none;
     color: var(--color_Text_Light);
-    font-size: var(--font_Size_Btn);
+    font-size: var(--font_Size_Body);
     cursor: pointer;
     margin: 0;
     text-align: center;
@@ -36,6 +36,25 @@ section.hero > article .contenu {
   .prime-btn.light {
     background-color: var(--color_Btn_Bg_Alt);
     color: var(--color_Btn_Text_Alt);
+    border: 1px solid var(--color_Btn_Bg_Alt);
+    transition: border-color 300ms ease, color 300ms ease;
+
+    @media(hover: hover) {
+      &:hover {
+        border-color: var(--color_Btn_Bg_Hover);
+        color: var(--color_Btn_Bg_Hover)
+      }
+    }
+
+    &:active {
+      border-color: var(--color_Btn_Border_Pressed);
+      color: var(--color_Btn_Border_Pressed);
+    }
+
+    &:focus-visible {
+      border-color: var(--color_Btn_Border_Focused);
+      outline: 1px solid var(--color_Btn_Border_Focused);
+    }
   }
 
   .prime-link {

@@ -1,5 +1,6 @@
 import vue from "@vitejs/plugin-vue";
 import {PATH_TEMPLATES} from './constants.js';
+import pugPlugin from "vite-plugin-pug";
 
 // Общие настройки для Vite сборки
 export const VITE_COMMON = {
@@ -28,7 +29,7 @@ export function getCssBuildConfig(cssPath, outputDir, sectionName) {
 // Функция для генерации конфига сборки JS
 export function getJsBuildConfig(jsPath, outputDir, sectionName) {
   return {
-    plugins: [vue()],   // Подключаем React и Vue плагины
+    plugins: [vue()],   // Vue плагины
     build: {
       rollupOptions: {
         input: jsPath,
@@ -48,7 +49,7 @@ export function getJsBuildConfig(jsPath, outputDir, sectionName) {
 // Функция для генерации конфига dev режима
 export function VITE_SERVER_CONFIG(devDir) {
   return {
-    plugins: [vue()],
+    plugins: [vue(), pugPlugin()],
     server: {
       middlewareMode: true,
       hmr: true,

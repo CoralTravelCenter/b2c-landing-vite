@@ -58,10 +58,28 @@ section.hero > article .contenu {
 }
 
 section.hero.full-width {
-  --background-color: #fff;
   @include mixins.hero-layout-full-width;
+
+  &:after {
+    background: #fff;
+  }
 }
 
 .row-container.layout-container-limit.center:has(section.full-width) {
   overflow-x: visible;
+}
+
+
+.hidden-on-mobile {
+  display: block;
+  @media (max-width: 768px) {
+    display: none;
+  }
+}
+
+.hidden-on-desktop {
+  display: none;
+  @media (max-width: 768px) {
+    display: block;
+  }
 }

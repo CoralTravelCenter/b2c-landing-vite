@@ -1,3 +1,4 @@
+import pug from 'pug';
 import {existsSync, mkdirSync, readFileSync, rmSync, writeFileSync} from 'fs';
 import path from 'path';
 import {build} from 'vite';
@@ -22,7 +23,12 @@ mkdirSync(cmsDir);
 // Функция для обработки одной секции
 async function processSection(sectionPath) {
   // Чтение HTML секции
-  const html = readFileSync(sectionPath, 'utf-8');
+  let html;
+  if (sectionPath.endsWith('.pug')) {
+    html = pug.renderFile(sectionPath);
+  } else {
+    html = readFileSync(sectionPath, 'utf-8');
+  }
 
   // Поиск подключённых CSS и JS файлов в HTML
   const cssMatch = html.match(/<link[^>]*href="([^"]+)"[^>]*\/?>/i);
@@ -44,7 +50,8 @@ async function processSection(sectionPath) {
   // Сборка CSS, если он присутствует
   if (cssPath) {
     await build(getCssBuildConfig(cssPath, outputDir, sectionName));
-    cssOutput = readFileSync(`${outputDir}/${PATH_TEMPLATES.assetCss(sectionName)}`, 'utf-8');
+    const rawCss = readFileSync(`${outputDir}/${PATH_TEMPLATES.assetCss(sectionName)}`, 'utf-8');
+    cssOutput = rawCss.replace(/^@charset\s+"UTF-8";\s*/i, '');
   }
 
   // Сборка JS, если он присутствует
