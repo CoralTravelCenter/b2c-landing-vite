@@ -23,6 +23,8 @@ export function combineIntoLandingPage(sections) {
 
       const sectionBody = $section('body').html() || $section.root().html();
 
+      sectionsContent += '<div>\n';
+
       if (styleLinks.length > 0) {
         sectionsContent += `<style>\n`;
         styleLinks.forEach(href => {
@@ -32,7 +34,8 @@ export function combineIntoLandingPage(sections) {
         sectionsContent += `</style>\n`;
       }
 
-      sectionsContent += sectionBody.trim() + '\n\n';
+      sectionsContent += `${sectionBody.trim()}\n`;
+      sectionsContent += '</div>\n\n';
     }
   });
 

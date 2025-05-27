@@ -28,6 +28,13 @@ async function processSection(sectionPath) {
     html = pug.renderFile(sectionPath);
   } else {
     html = readFileSync(sectionPath, 'utf-8');
+    // Заменяем пути ../assets/... на cdnAssetsURL из конфига
+    const cdnAssetsURL = config.env.cdnAssetsURL.replace(/\/$/, '');
+    html = html.replace(/(["'(])\.\.\/assets\/([^"')]+)/g, `$1${cdnAssetsURL}/$2`);
+    html = html.replace(/style\s*=\s*"(.*?)"/g, (match, styleContent) => {
+      const replacedStyle = styleContent.replace(/(["'(])\.\.\/assets\/([^"')]+)/g, `$1${cdnAssetsURL}/$2`);
+      return `style="${replacedStyle}"`;
+    });
   }
 
   // Поиск подключённых CSS и JS файлов в HTML
