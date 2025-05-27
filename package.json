@@ -1,6 +1,6 @@
 {
   "name": "b2c-landing-vite",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "type": "module",
   "scripts": {
     "dev": "node lib/server.js",
@@ -35,7 +35,8 @@
     "pug": "^3.0.3",
     "sass": "^1.87.0",
     "vue": "^3.5.15",
-    "yargs": "^17.7.2"
+    "yargs": "^17.7.2",
+    "vite-plugin-pug": "^0.4.1"
   },
   "bin": {
     "b2c-landing-vite": "bin/cli.js"
