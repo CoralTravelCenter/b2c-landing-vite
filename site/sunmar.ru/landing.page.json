@@ -1,9 +1,0 @@
-{
-  "env": {
-    "brand": "sunmar-next",
-    "cmsWidgetContainer": "<div>{{ widget_markup }}</div>",
-    "cdnAssetsURL": ""
-  },
-  "sections": [
-  ]
-}
