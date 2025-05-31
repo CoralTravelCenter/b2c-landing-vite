@@ -1,45 +1,31 @@
 #!/usr/bin/env node
 
 import path from 'path';
-import fs from 'fs';
 import {execSync} from 'child_process';
-import readline from 'readline';
+import inquirer from 'inquirer';
 import {buildAll} from '../lib/build.js';
 
 // args: [node, script, command, config?]
 const [, , command = 'build', configArg] = process.argv;
 const configPath = path.resolve(process.cwd(), configArg || 'build.config.json');
 
-// Копирование шаблона (пока не используется)
-function copyTemplate(srcDir, destDir) {
-  fs.mkdirSync(destDir, {recursive: true});
-  for (const file of fs.readdirSync(srcDir)) {
-    const srcFile = path.join(srcDir, file);
-    const destFile = path.join(destDir, file);
-    if (fs.statSync(srcFile).isDirectory()) {
-      copyTemplate(srcFile, destFile);
-    } else {
-      fs.copyFileSync(srcFile, destFile);
-    }
-  }
-}
 
-async function askExtraDeps() {
-  return new Promise((resolve) => {
-    const rl = readline.createInterface({input: process.stdin, output: process.stdout});
-    rl.question(
-      'Хотите добавить поддержку vue, less, pug? Укажите нужные через пробел (например: vue pug), Enter — только sass: ',
-      (answer) => {
-        rl.close();
-        const list = answer
-          .split(' ')
-          .map(x => x.trim())
-          .filter(Boolean)
-          .filter(x => ['vue', 'less', 'pug'].includes(x));
-        resolve(list);
-      }
-    );
-  });
+async function askExtrasWithCheckboxes() {
+  const {features} = await inquirer.prompt([
+    {
+      type: 'checkbox',
+      name: 'features',
+      message: 'Что добавить в проект?',
+      choices: [
+        {name: 'Sass', value: 'sass', checked: true},
+        {name: 'Vue', value: 'vue'},
+        {name: 'Less', value: 'less'},
+        {name: 'Pug', value: 'pug'},
+        {name: 'Инициализировать git-репозиторий', value: 'git'},
+      ]
+    }
+  ]);
+  return features;
 }
 
 (async () => {
@@ -63,16 +49,28 @@ async function askExtraDeps() {
         }
         const cmd = `npx create-b2c-landing-vite@latest "${targetDir}"`;
         console.log(`Создаём новый проект с помощью шаблона...`);
-        execSync(cmd, {stdio: 'inherit'});
+        execSync(cmd, {stdio: 'inherit', shell: true});
 
         // Спрашиваем про доп. пакеты
-        const extraDeps = await askExtraDeps();
-        const deps = ['sass', ...extraDeps];
+        const features = await askExtrasWithCheckboxes();
+        let deps = features.filter(f => ['sass', 'vue', 'less', 'pug'].includes(f));
+        if (!deps.includes('sass')) {
+          deps.unshift('sass');
+        }
         console.log(`Устанавливаем зависимости: ${deps.join(', ')}`);
         execSync(`npm install --save-dev ${deps.join(' ')}`, {
           cwd: path.resolve(process.cwd(), targetDir),
-          stdio: 'inherit'
+          stdio: 'inherit',
+          shell: true,
         });
+        if (features.includes('git')) {
+          execSync('git init', {
+            cwd: path.resolve(process.cwd(), targetDir),
+            stdio: 'inherit',
+            shell: true,
+          });
+          console.log('Git-репозиторий инициализирован!');
+        }
         console.log('Все зависимости установлены!');
         break;
       }
