@@ -27,7 +27,8 @@ const configPath = path.resolve(process.cwd(), configArg || 'build.config.json')
         break;
       }
       case 'init': {
-        await handleInit(configArg, defaultShell)
+        await handleInit(configArg, defaultShell);
+        console.log('✅ Шаблон успешно установлен в текущей директории');
         break;
       }
       case 'build':

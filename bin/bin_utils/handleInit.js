@@ -2,6 +2,7 @@ import {execSync} from "child_process";
 import {askExtrasWithCheckboxes} from "./askExtrasWithCheckboxes.js";
 import fs from "fs";
 import path from "path";
+import {writeGitignore} from "./writeGitignore.js";
 
 /**
  * Инициализирует проект в указанной директории:
@@ -32,12 +33,17 @@ export async function handleInit(targetDir, defaultShell) {
   const fullPath = path.resolve(process.cwd(), targetDir);
   const folderName = path.basename(fullPath);
 
-  execSync(`npx create-b2c-landing-vite@latest`, {
-    cwd: fullPath,
-    stdio: 'inherit',
-    shell: defaultShell,
-    env: {...process.env, SHELL: defaultShell}
-  });
+  try {
+    execSync(`npx create-b2c-landing-vite@latest`, {
+      cwd: fullPath,
+      stdio: 'inherit',
+      shell: defaultShell,
+      env: {...process.env, SHELL: defaultShell}
+    });
+  } catch (err) {
+    console.log('❌ Ошибка при установке шаблона');
+    process.exit(1);
+  }
 
   const gitFolder = path.join(fullPath, '.git');
   if (fs.existsSync(gitFolder)) {
@@ -59,20 +65,25 @@ export async function handleInit(targetDir, defaultShell) {
     fs.copyFileSync(gitignoreSrc, path.join(fullPath, '.gitignore'));
   }
 
-  execSync(`npm install --save-dev ${deps.join(' ')}`, {
-    cwd: fullPath,
-    stdio: 'inherit',
-  });
-
-  if (needGit) {
-    execSync('git init', {cwd: fullPath, stdio: 'inherit'});
-    const gitignoreLines = [
-      'node_modules', 'dev', '@CMS', '.DS_Store', 'Thumbs.db',
-      '.idea', '.vscode', '*.log', 'npm-debug.log', '.env'
-    ];
-    fs.writeFileSync(path.join(fullPath, '.gitignore'), gitignoreLines.join('\n') + '\n', 'utf-8');
-    console.log('📁 Git-репозиторий инициализирован');
+  try {
+    execSync(`npm install --save-dev ${deps.join(' ')}`, {
+      cwd: fullPath,
+      stdio: 'inherit',
+    });
+  } catch (err) {
+    console.log('❌ Ошибка при установке зависимостей');
+    process.exit(1);
   }
 
-  console.log('✅ Шаблон успешно установлен в текущей директории');
+  if (needGit) {
+    try {
+      execSync('git init', {cwd: fullPath, stdio: 'inherit'});
+      console.log('📁 Git-репозиторий инициализирован');
+    } catch (err) {
+      console.log('⚠️ Git не установлен');
+    }
+
+    await writeGitignore()
+    console.log('📝 Файл .gitignore создан');
+  }
 }
