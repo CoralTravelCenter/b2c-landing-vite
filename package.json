@@ -1,6 +1,6 @@
 {
   "name": "b2c-landing-vite",
-  "version": "1.3.6",
+  "version": "1.4.2",
   "type": "module",
   "scripts": {
     "dev": "node lib/server.js",
